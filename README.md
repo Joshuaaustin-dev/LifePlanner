@@ -10,5 +10,12 @@ Currently, two official plugins are available:
 SETUP
 - After pulling the project it is necessary to install axios and react-bootstrap on this project run the following commands in the terminal while in the root project directory 
 
+INSTALLS
+npm install
+
+FRONTEND
 npm install react-bootstrap bootstrap
 npm install axios
+
+BACKEND
+npm install mongodb
