@@ -1,26 +1,29 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import { config } from "dotenv";
 
+config();
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 // MongoDB connection string - Update this based on your cluster
-const mongoURI = 'mongodb+srv://dbUser:WeberFever99!@cluster0.sv6at.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'; 
+const mongoURI = process.env.DB_URI;
 
 // Connect to MongoDB
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose
+  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log('MongoDB connected');
+    console.log("MongoDB connected");
   })
-  .catch(err => {
-    console.error('MongoDB connection error:', err);
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
   });
 
 // Example route
-app.get('/', (req, res) => {
-  res.send('Hello from Express!');
+app.get("/", (req, res) => {
+  res.send("Hello from Express!");
 });
 
 // Start the server
