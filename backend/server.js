@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB connection string - Update this based on your cluster
-const mongoURI = 'mongodb+srv://dbUser:WeberFever99!@cluster0.sv6at.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'; 
+const mongoURI = ''; 
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
