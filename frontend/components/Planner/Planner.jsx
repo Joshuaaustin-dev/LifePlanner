@@ -1,19 +1,30 @@
 import { useState } from "react";
 import axios from "axios";
 
-const AIExample = () => {
+const Planner = () => {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
+  const HTTP = "http://localhost:5000/chat";
 
-  const handlePromptChange = (e) => setPrompt(e.target.value);
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  //TODO: Modify this handler to use the API key
-  const handleSendToAI = () => {
-    if (prompt) {
-      setResponse("Hello World");
-    } else {
-      setResponse("Please enter a prompt");
-    }
+    axios
+      .post(`${HTTP}`, { prompt })
+      .then((res) => {
+        setResponse(res.data);
+        console.log(prompt);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    setPrompt("");
+  };
+
+  const handlePrompt = (e) => {
+    setPrompt(e.target.value);
   };
 
   return (
@@ -24,11 +35,11 @@ const AIExample = () => {
         rows="4"
         value={prompt}
         placeholder="Enter a prompt..."
-        onChange={handlePromptChange}
+        onChange={handlePrompt}
       />
       <br></br>
       <button
-        onClick={handleSendToAI}
+        onClick={handleSubmit}
         className="mt-4 bg-blue-500 px-4 py-2 rounded"
       >
         Send to AI
@@ -44,4 +55,4 @@ const AIExample = () => {
   );
 };
 
-export default AIExample;
+export default Planner;

@@ -1,4 +1,4 @@
-import AIExample from "./AI/AIExample";
+import Planner from "../Planner/Planner";
 
 const Dashboard = () => {
   return (
@@ -11,7 +11,7 @@ const Dashboard = () => {
         {/* AI prompt window */}
         <div className="bg-white rounded shadow p-4">
           <h2 className="text-xl font-semibold mb-4">AI Example</h2>
-          <AIExample />
+          {/* <AIExample /> */}
         </div>
 
         {/* Placeholder for other widgets when we decide to add them */}
