@@ -23,3 +23,9 @@ Currently, two official plugins are available:
 
 # Create an Env File for API KEY
     OPENAI_API_KEY=API_KEY
+
+# Running Application 
+    cd backend
+    node server.js
+    cd frontend 
+    npm run dev 
