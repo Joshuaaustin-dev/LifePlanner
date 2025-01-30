@@ -1,0 +1,30 @@
+.Planner {
+    margin: 1rem auto;
+    width: 90%;
+    max-width: 40rem;
+    text-align: center;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.textbox{
+    width:300px;
+    height:150px;
+    border: 2px solid grey;
+    border-radius: 10px;
+}
+
+.dropdown{
+    background : #2d2f31; 
+    color : white;
+    font-size : 1.2em;
+    cursor : pointer;
+    text-align:center;
+    border-radius: 10px;
+    margin: 1rem;
+}
+
+.button{
+    border-radius: 10px;
+}

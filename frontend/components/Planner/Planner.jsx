@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-
+import "./Planner.css"
 const Planner = () => {
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -42,20 +42,17 @@ const Planner = () => {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <h1 className="text-xl font-bold mb-4">AI Integration</h1>
-      <textarea
-        className="w-full border p-2"
+    <div className="Planner">
+      <h1>AI Integration</h1>
+      <textarea className="textbox"
         rows="4"
         value={prompt}
         placeholder="Enter a prompt..."
         onChange={(e) => setPrompt(e.target.value)}
       />
       
-      <div className="mt-2">
-        <label className="block font-semibold">Select Time Period:</label>
-        <select
-          className="w-full border p-2 mt-1"
+      <div>
+        <select className="dropdown"
           value={timePeriod}
           onChange={(e) => setTimePeriod(e.target.value)}
         >
@@ -65,9 +62,8 @@ const Planner = () => {
         </select>
       </div>
       
-      <button
+      <button className="button"
         onClick={handleSubmit}
-        className="mt-4 bg-blue-500 px-4 py-2 rounded text-black"
       >
         Send to AI
       </button>
@@ -80,7 +76,7 @@ const Planner = () => {
             <div>
               {plan.map((day, index) => (
                 <div key={index} className="mb-4">
-                  <h3 className="font-semibold">Day {day.day}:</h3>
+                  <h3 className="font-semibold">{day.day}:</h3>
                   <ul>
                     {day.tasks.map((task, i) => (
                       <li key={i}>{task}</li>
