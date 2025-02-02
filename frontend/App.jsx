@@ -4,14 +4,14 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import NavigationMenu from "./components/NavigationMenu";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Home from "./components/Home";
+import Home from "./components/Home/Home";
 import Planner from "./components/Planner/Planner";
 import Profile from "./components/Profile/Profile";
 import Calendar from "./components/Calender/Calender";
 function App() {
   return (
     <div className="App">
-      <Dashboard/>
+      <Dashboard />
       <Router>
         <NavigationMenu />
         <Routes>
@@ -22,7 +22,6 @@ function App() {
         </Routes>
       </Router>
     </div>
-    
   );
 }
 
