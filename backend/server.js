@@ -113,7 +113,7 @@ app.post("/chat", async (req, res) => {
       model: "gpt-4o-mini",
       messages: [{ role: "user", content: prompt }],
       max_tokens: 512,
-      temperature: 0.7,
+      temperature: 0.1,
     });
 
     res.send(completion.choices[0].message.content);
