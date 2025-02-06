@@ -25,11 +25,11 @@ const dummyUser = {
     {
       name: "React",
       day: [
-        { date: "2025-01-01", content: "Learn useState and useEffect" },
-        { date: "2025-01-02", content: "Build a basic component" },
-        { date: "2025-01-03", content: "Manage state with useContext" },
-        { date: "2025-01-04", content: "Learn React Router" },
-        { date: "2025-01-05", content: "Create a dynamic list with React" },
+        { date: "2025-02-01", content: "Learn useState and useEffect" },
+        { date: "2025-02-02", content: "Build a basic component" },
+        { date: "2025-02-03", content: "Manage state with useContext" },
+        { date: "2025-02-04", content: "Learn React Router" },
+        { date: "2025-02-05", content: "Create a dynamic list with React" },
       ],
     },
   ],

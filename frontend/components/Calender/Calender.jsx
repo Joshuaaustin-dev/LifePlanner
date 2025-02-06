@@ -19,14 +19,12 @@ const Calendar = () => {
     const date = new Date();
     const currentMonth = getMonthName(date.getMonth());
 
-    
-
     return (
         <div className="calendar">
             <h1>{currentMonth}</h1>
             <div className="days-container">
                 {Array.from({ length: daysInMonth }, (_, index) => (
-                    <Days key={index} dayNumber={index + 1} />
+                    <Days key={index} monthNumber={date.getMonth()} dayNumber={index + 1} />  
                 ))}
             </div>
         </div>

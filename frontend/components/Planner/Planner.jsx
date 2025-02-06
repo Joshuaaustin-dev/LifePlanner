@@ -26,7 +26,8 @@ const Planner = () => {
   const HTTP = "http://localhost:5000/chat";
   const queryPlan = "Create a structured learning plan for the subject:";
   const queryTime = "The plan should span over";
-  const queryStyle = `Make the name the subject, do not include json at the top or escape sequences, do not contain the day in content and keep it brief. Format the output as follows: {"name":"Chess","day":[{"date":"2025-02-01","content":"Introduction to chess: Learn the board setup, piece movements, and rules. Play games focusing on applying these principles."}]}`;
+  const today = new Date().toISOString().split("T")[0];
+  const queryStyle = `Make the name the subject, do not include json at the top or escape sequences, do not contain the day in content and keep it brief, The first day should be ${today}. Format the output as follows: {"name":"Chess","day":[{"date":"2025-02-01","content":"Introduction to chess: Learn the board setup, piece movements, and rules. Play games focusing on applying these principles."}]}`;
 
   const handleSubmit = (e) => {
     e.preventDefault();

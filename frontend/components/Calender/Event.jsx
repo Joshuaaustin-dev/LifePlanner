@@ -9,8 +9,6 @@ const Event = ({ date }) => {
         axios
             .get("http://localhost:5000/dummy")
             .then((response) => {
-                console.log("Response:", response);  // Logs the entire response object
-                console.log("Response Data:", response.data);
                 setUser(response.data);
             })
             .catch((error) => {
@@ -36,7 +34,6 @@ const Event = ({ date }) => {
                     {skillsForDay.map((skill, skillIndex) => (
                         <div key={skillIndex}>
                             {skill.day.map((dayInfo, daysIndex) => (
-                                
                                 <li key={daysIndex}>
                                     <h5>{dayInfo.content}</h5>
                                 </li>
