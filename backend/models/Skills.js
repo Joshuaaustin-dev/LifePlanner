@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-const { Schema, model } = mongoose;
 import daySchema from "./Day.js";
+
+const { Schema, model } = mongoose;
 
 const skillsSchema = new Schema({
   name: String,
