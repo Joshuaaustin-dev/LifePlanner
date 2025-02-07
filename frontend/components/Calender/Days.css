@@ -1,0 +1,19 @@
+.day {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid black;  
+    width: 14%;              
+    height: 500px;             
+    text-align: center;
+    vertical-align: top;      
+}
+
+.day-number{
+    display: flex;
+    justify-content: center;
+    align-items: center;     
+    height: 20%;            
+    width: 100%;             
+    font-weight: bold;        
+    
+}
