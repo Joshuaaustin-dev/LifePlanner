@@ -6,6 +6,11 @@ body {
   padding: 0;
 }
 
+.App {
+  display: flex;
+  height: 100vh;
+}
+
 /* center dashboard */
 .content-wrapper {
   margin-top: 70px;

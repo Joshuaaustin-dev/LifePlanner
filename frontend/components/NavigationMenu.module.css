@@ -1,0 +1,50 @@
+.NavigationMenu {
+  width: 250px;
+  background-color: #000f26;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+.logoContainer {
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #000f26;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 20px;
+  color: white;
+}
+
+.sidebar a {
+  color: white;
+  padding: 10px;
+  display: block;
+}
+
+.sidebar a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  color: white;
+}
