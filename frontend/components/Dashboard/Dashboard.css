@@ -1,0 +1,12 @@
+main {
+    display: flex;
+    justify-content: space-between; 
+    gap: 20px; 
+    padding: 20px;
+}
+header {
+    background-color: #A9A9A9; 
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}

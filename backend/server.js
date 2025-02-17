@@ -123,6 +123,35 @@ app.post("/chat", async (req, res) => {
   }
 });
 
+
+//updates completed skills 
+app.patch("/update-goal/:id", async (req, res) => {
+  const { id } = req.params; 
+  const { completed } = req.body; 
+
+  try {
+    const user = await User.findOne({ "skills.day._id": id }); 
+    if (!user) {
+      return res.status(404).json({ message: "User or Goal not found" });
+    }
+
+    const goal = user.skills
+      .flatMap((skill) => skill.day)
+      .find((goal) => goal._id.toString() === id);
+
+    if (goal) {
+      goal.completed = completed;
+      await user.save();
+      res.json({ message: "Goal updated", goal });
+    } else {
+      res.status(404).json({ message: "Goal not found" });
+    }
+  } catch (err) {
+    console.error("Error updating goal:", err);
+    res.status(500).send("Error updating goal");
+  }
+});
+
 // Connect to MongoDB
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })

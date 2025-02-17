@@ -5,9 +5,13 @@ const { Schema, model } = mongoose;
 const daySchema = new Schema({
   date: {
     type: Date, 
-    get: (v) => v.toISOSTring().split("T")[0]
+    get: (v) => v.toISOString().split("T")[0],
   },
   content: String,
+  completed:{
+    type: Boolean, 
+    default: false,
+  }
 });
 
 export default daySchema;
