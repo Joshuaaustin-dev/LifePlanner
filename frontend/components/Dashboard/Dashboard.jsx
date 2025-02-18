@@ -4,17 +4,17 @@ import "./Dashboard.css";
 
 const Dashboard = () => {
   return (
-    <div className="dashboard-container">
-      <header>
+    <div>
+      <header className="dashboard-container">
         <h1>Dashboard</h1>
       </header>
       <main>
-        <div className="goals-container">
+        <section className="goals-container">
           <Goals />
-        </div>
-        <div className="todo-container">
+        </section>
+        <section className="todo-list-conainer">
           <ToDoList />
-        </div>
+        </section>
       </main>
     </div>
   );

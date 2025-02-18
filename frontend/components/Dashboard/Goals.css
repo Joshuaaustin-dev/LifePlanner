@@ -57,5 +57,6 @@ input[type="checkbox"] {
     border-radius: 2rem;
     background-color: #B87333;
     height: 200px; 
+    width: 750px;
     overflow-y: auto; 
 }

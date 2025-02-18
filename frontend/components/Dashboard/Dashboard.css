@@ -1,12 +1,15 @@
-main {
-    display: flex;
-    justify-content: space-between; 
-    gap: 20px; 
-    padding: 20px;
-}
-header {
-    background-color: #A9A9A9; 
+.dashboard-container{
+    background-color: #A9A9A9;
     color: white;
     padding: 1rem;
     text-align: center;
+    flex: 0 0 auto; 
+    box-sizing: border-box;
+}
+
+.goals-container{
+    padding: 5px;
+}
+.todo-list-conainer{
+    padding-left: 25%;
 }
