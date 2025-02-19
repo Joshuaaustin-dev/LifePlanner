@@ -35,7 +35,7 @@ const ToDoList = () => {
                 )
                 .sort((a, b) => a.date - b.date); 
 
-            const nextSevenGoals = filteredGoals.slice(0, 7);
+            const nextSevenGoals = filteredGoals.slice(0, 3);
             setGoals(nextSevenGoals);
         }
     }, [user]);
