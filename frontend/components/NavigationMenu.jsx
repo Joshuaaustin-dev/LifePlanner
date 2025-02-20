@@ -19,7 +19,7 @@ const NavigationMenu = () => {
             <Nav.Link href="/Profile">Profile</Nav.Link>
             <Nav.Link href="/Calender">Calendar</Nav.Link>
             <Nav.Link href="/Calender">Shop</Nav.Link>
-            <Nav.Link href="/SignOut">Sign Out</Nav.Link>
+            <Nav.Link href="/Logout">Sign Out</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
