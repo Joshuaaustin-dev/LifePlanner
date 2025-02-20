@@ -11,6 +11,7 @@ import Profile from "./components/Profile/Profile";
 import Calendar from "./components/Calender/Calender";
 import Login from "./components/Login/Login";
 import Logout from "./components/Login/Logout";
+import CreateNewUser from "./components/Login/CreateNewUser";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -41,13 +42,13 @@ function App() {
                 )
               }
             />
-
             {/* If the user is not authenticated, show login page */}
             <Route
               path="/login"
               element={<Login setIsAuthenticated={setIsAuthenticated} />}
             />
-
+            <Route path="/create-account" element={<CreateNewUser />} />{" "}
+            {/* New Route */}
             {/* Protected Routes: Only show these if the user is authenticated */}
             {isAuthenticated && (
               <>
@@ -62,7 +63,6 @@ function App() {
                 />
               </>
             )}
-
             {/* Redirect to login if the user tries to access a protected route while not authenticated */}
             <Route
               path="*"

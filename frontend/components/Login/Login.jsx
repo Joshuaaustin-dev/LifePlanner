@@ -54,7 +54,9 @@ function Login({ setIsAuthenticated }) {
         <button type="submit">Login</button>
         {/*TODO*/}
         <a>Forgot Password?</a>
-        <a>Create new account</a>
+        <p>
+          Don't have an account? <a href="/create-account">Create one</a>
+        </p>
       </form>
     </div>
   );
