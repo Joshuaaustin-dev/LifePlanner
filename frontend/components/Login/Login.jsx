@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import styles from "./Login.module.css";
+import logo from "../../assets/images/LifePlanner.png";
 
 function Login({ setIsAuthenticated }) {
   const [email, setEmail] = useState("");
@@ -33,31 +35,66 @@ function Login({ setIsAuthenticated }) {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      {error && <p>{error}</p>}
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
-        {/*TODO*/}
-        <a>Forgot Password?</a>
-        <p>
-          Don't have an account? <a href="/create-account">Create one</a>
-        </p>
-      </form>
+    <div className={`container-fluid ${styles.loginContainer}`}>
+      <div className="row align-items-center justify-content-center">
+        {/* Logo Section */}
+        <div className="col-sm-4 col-md-3 logo-container d-flex justify-content-center">
+          <img src={logo} alt="LifePlanner Logo" className="img-fluid" />
+        </div>
+
+        {/* Form Section */}
+        <div className="col-sm-6 col-md-4">
+          <h2 className="text-center mb-4">Login</h2>
+
+          {/* Display error message if there's an error */}
+          {error && (
+            <div className="alert alert-danger text-center" role="alert">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleLogin}>
+            <div className="mb-3">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="form-control"
+                placeholder="Email"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="form-control"
+                placeholder="Password"
+                required
+              />
+            </div>
+            <div className="text-center">
+              <button type="submit" className="btn btn-primary mx-auto">
+                Login
+              </button>
+            </div>
+          </form>
+
+          <div className="text-center mt-3">
+            {/*TODO*/}
+            <a href="#" className="text-decoration-none">
+              Forgot password?
+            </a>
+          </div>
+          <hr />
+          <div className="text-center">
+            <a href="/create-account" className="btn btn-success">
+              Create New Account
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
