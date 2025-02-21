@@ -4,35 +4,13 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import logo from "../../assets/images/LifePlanner.png";
 
-function Login({ setIsAuthenticated }) {
+function ResetPassword() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  //Handle user login with the provided username and password
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post("http://localhost:5000/login", {
-        email,
-        password,
-      });
-
-      if (response.status === 200) {
-        // Store user data in localStorage or state
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-
-        // Set authentication state
-        setIsAuthenticated(true);
-
-        navigate("/Home"); // Redirect after login
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
-    }
-  };
+  //TODO Handle password reset submission
 
   return (
     <div className={`container-fluid ${styles.loginContainer}`}>
@@ -44,7 +22,7 @@ function Login({ setIsAuthenticated }) {
 
         {/* Form Section */}
         <div className="col-sm-6 col-md-4">
-          <h2 className="text-center mb-4">Login</h2>
+          <h2 className="text-center mb-4">Reset Password</h2>
 
           {/* Display error message if there's an error */}
           {error && (
@@ -53,44 +31,34 @@ function Login({ setIsAuthenticated }) {
             </div>
           )}
 
-          <form onSubmit={handleLogin}>
+          {/* Display success message */}
+          {message && (
+            <div className="alert alert-success text-center" role="alert">
+              {message}
+            </div>
+          )}
+
+          <form>
             <div className="mb-3">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="form-control"
-                placeholder="Email"
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="form-control"
-                placeholder="Password"
+                placeholder="Enter your email"
                 required
               />
             </div>
             <div className="text-center">
               <button type="submit" className="btn btn-primary mx-auto">
-                Login
+                Submit Pa
               </button>
             </div>
           </form>
 
           <div className="text-center mt-3">
-            {/*TODO*/}
-            <a href="/reset-password" className="text-decoration-none">
-              Forgot password?
-            </a>
-          </div>
-          <hr />
-          <div className="text-center">
-            <a href="/create-account" className="btn btn-success">
-              Create New Account
+            <a href="/login" className="text-decoration-none">
+              Back to Login
             </a>
           </div>
         </div>
@@ -99,4 +67,4 @@ function Login({ setIsAuthenticated }) {
   );
 }
 
-export default Login;
+export default ResetPassword;
