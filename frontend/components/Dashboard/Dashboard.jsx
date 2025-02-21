@@ -1,7 +1,7 @@
 import Goals from "./Goals";
 import ToDoList from "./ToDoList";
 import "./Dashboard.css";
-/*import HorizontalBarChart from "./HorizontalBarChart";*/
+import HorizontalBarChart from "./HorizontalBarChart";
 const Dashboard = () => {
   return (
     <div>
@@ -14,9 +14,7 @@ const Dashboard = () => {
             <Goals />
           </section>
           <section className="horizontalBarChart">
-            {/*
             <HorizontalBarChart />
-            */}
           </section>
         </section>
 
