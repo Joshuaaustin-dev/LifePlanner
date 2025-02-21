@@ -1,0 +1,50 @@
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  width: 1670px;
+  height: 100vh;
+  overflow: hidden;
+}
+.drag {
+  padding-top: 1rem;
+  flex: 2;
+  width: 15vw;
+  text-align: center;
+}
+
+.task-header {
+  background-color: var(--fc-button-bg-color);
+  color: white;
+  width: auto;
+  height: 3em;
+  font-size: 1.75rem;
+  line-height: 80px;
+}
+
+.calendar {
+  flex: 8;
+}
+.task {
+  cursor: pointer;
+  color: var(--fc-event-text-color);
+  background-color: var(--fc-event-bg-color);
+  height: 8vh;
+  line-height: 45px;
+  user-select: none;
+  margin: 0 0 1px 0;
+}
+
+.task > div {
+  text-align: center;
+}
+
+.fc .fc-toolbar {
+  color: white; /* Toolbar text */
+  padding: 10px;
+}
+
+.fc-col-header-cell-cushion,
+.fc-daygrid-day-number {
+  color: black;
+  text-decoration: none;
+}

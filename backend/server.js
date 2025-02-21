@@ -5,6 +5,7 @@ import { config } from "dotenv";
 import bodyParser from "body-parser";
 import { OpenAI } from "openai";
 import User from "./models/User.js";
+import calendarRoutes from "./routes/calendarRoutes.js";
 
 config();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -12,6 +13,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
+
+app.use("/calendar-api", calendarRoutes);
 
 // MongoDB connection string - Update this based on your cluster
 const mongoURI = process.env.DB_URI;
@@ -123,14 +126,13 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-
-//updates completed skills 
+//updates completed skills
 app.patch("/update-goal/:id", async (req, res) => {
-  const { id } = req.params; 
-  const { completed } = req.body; 
+  const { id } = req.params;
+  const { completed } = req.body;
 
   try {
-    const user = await User.findOne({ "skills.day._id": id }); 
+    const user = await User.findOne({ "skills.day._id": id });
     if (!user) {
       return res.status(404).json({ message: "User or Goal not found" });
     }
@@ -162,10 +164,8 @@ mongoose
     console.error("MongoDB connection error:", err);
   });
 
-
 // DEBUG User Registration via POST method
 app.post("/register", async (req, res) => {
-
   const { name, email, password } = req.body;
 
   try {
@@ -203,7 +203,10 @@ app.post("/login", async (req, res) => {
     }
 
     // Response if the credentials match a
-    res.status(200).json({ message: "Login successful", user: { name: user.name, email: user.email } });
+    res.status(200).json({
+      message: "Login successful",
+      user: { name: user.name, email: user.email },
+    });
   } catch (err) {
     res.status(500).json({ message: "Error logging in" });
   }
