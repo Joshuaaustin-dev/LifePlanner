@@ -17,10 +17,6 @@ Currently, two official plugins are available:
     npm install react-bootstrap bootstrap
     npm install axios
     npm install recharts
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 
 # BACKEND
     npm install mongodb

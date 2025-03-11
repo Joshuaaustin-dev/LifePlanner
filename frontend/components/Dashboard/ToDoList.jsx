@@ -5,17 +5,24 @@ import "./ToDoList.css";
 const ToDoList = () => {
     const [user, setUser] = useState(null);
     const [goals, setGoals] = useState([]);
+    const [userStore, setUserStore] = useState(null);
 
     useEffect(() => {
-        axios
-            .get("http://localhost:5000/dummy")
-            .then((response) => {
-                setUser(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching user:", error);
-            });
+        setUserStore(JSON.parse(localStorage.getItem("user")));
     }, []);
+
+    useEffect(() => {
+        if (userStore) {
+            axios
+                .post("http://localhost:5000/get-user", { email: userStore.email })
+                .then((response) => {
+                    setUser(response.data);
+                })
+                .catch((error) => {
+                    console.error("Error fetching user:", error);
+                });
+        }
+    }, [userStore]);
 
     useEffect(() => {
         if (user && user.skills) {
@@ -35,22 +42,20 @@ const ToDoList = () => {
                 )
                 .sort((a, b) => a.date - b.date); 
 
-            const nextSevenGoals = filteredGoals.slice(0, 3);
-            setGoals(nextSevenGoals);
+            const nextThreeGoals = filteredGoals.slice(0, 3);
+            setGoals(nextThreeGoals);
         }
     }, [user]);
 
     return (
         <div>
-           
-
             <main>
                 <div className="ToDoList-border">
                     <h2>ToDo List</h2>
                     {goals.length > 0 ? (
                         <ul>
                             {goals.map((goal) => (
-                                <li key={goal.id} >
+                                <li key={goal.id}>
                                     <span className={goal.completed ? "line-through" : ""}>
                                         {goal.content} - {goal.date.toDateString()}
                                     </span>

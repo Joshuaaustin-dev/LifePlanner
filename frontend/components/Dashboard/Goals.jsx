@@ -1,22 +1,29 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./Goals.css";
+import styles from "./Goals.module.css"; // Import the CSS module
 
-const Goals = () => {
+const Goals = ({ onGoalUpdate }) => {
     const [user, setUser] = useState(null);
     const [goals, setGoals] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const [userStore, setUserStore] = useState(null);
 
     useEffect(() => {
-        axios
-            .get("http://localhost:5000/dummy") 
-            .then((response) => {
-                setUser(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching user:", error);
-            });
+        setUserStore(JSON.parse(localStorage.getItem("user")));
     }, []);
+
+    useEffect(() => {
+        if (userStore) {
+            axios
+                .post("http://localhost:5000/get-user", { email: userStore.email })
+                .then((response) => {
+                    setUser(response.data);
+                })
+                .catch((error) => {
+                    console.error("Error fetching user:", error);
+                });
+        }
+    }, [userStore]);
 
     useEffect(() => {
         if (user && user.skills) {
@@ -43,12 +50,15 @@ const Goals = () => {
                 completed: !currentStatus,
             });
 
-            // Update the goal's completion status in the UI
             setGoals((prevGoals) =>
                 prevGoals.map((goal) =>
                     goal.id === goalId ? { ...goal, completed: !currentStatus } : goal
                 )
             );
+
+            if (onGoalUpdate) {
+                onGoalUpdate(); // Notify Dashboard to update chart
+            }
         } catch (error) {
             console.error("Error updating goal:", error);
         }
@@ -57,18 +67,19 @@ const Goals = () => {
     return (
         <div>
             <main>
-                <div className="goals-border">
-                    <h2>Goals for Today</h2>
+                <div className={styles.goalsContainer}>
+                    <h2 className={styles.title}>Goals for Today</h2>
                     {goals.length > 0 ? (
-                        <ul>
+                        <ul className={styles.list}>
                             {goals.map((goal) => (
-                                <li key={goal.id}>
+                                <li key={goal.id} className={styles.listItem}>
                                     <input
                                         type="checkbox"
+                                        className={styles.checkbox}
                                         checked={goal.completed}
                                         onChange={() => toggleGoalCompletion(goal.id, goal.completed)}
                                     />
-                                    <span className={goal.completed ? "line-through" : ""}>
+                                    <span className={goal.completed ? styles.completed : ""}>
                                         {goal.content}
                                     </span>
                                 </li>
