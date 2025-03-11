@@ -13,18 +13,14 @@ const Calendar = () => {
   const [selectedSkill, setSelectedSkills] = useState();
   const [skillDay, setSkillDay] = useState([{}]);
   const [taskDay, setTaskDay] = useState([]);
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+  }, []);
+
   useEffect(() => {
     axios
-      .get("http://localhost:5000/dummy")
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user:", error);
-      });
-
-    axios
-      .get("http://localhost:5000/calendar-api/get-skills")
+      .post("http://localhost:5000/calendar-api/get-skills", user)
       .then((response) => {
         const skill = response.data.skills;
         setUserSkills(skill);
@@ -40,7 +36,7 @@ const Calendar = () => {
       .catch((error) => {
         console.error("Error fetching user:", error);
       });
-  }, []);
+  }, [user]);
 
   /*
   useEffect(() => {

@@ -8,20 +8,24 @@ const Planner = () => {
   const [plan, setPlan] = useState([]);
   const [timePeriod, setTimePeriod] = useState("2 days");
   const [user, setUser] = useState(null);
+  const [userStore, setUserStore] = useState(null);
 
   useEffect(() => {
-    setIsLoading(true); 
+    setIsLoading(true);
+    setUserStore(JSON.parse(localStorage.getItem("user")));
+  }, []);
+
+  useEffect(() => {
     axios
-      .get("http://localhost:5000/dummy")
+      .post("http://localhost:5000/get-user", userStore)
       .then((response) => {
         setUser(response.data);
-        setIsLoading(false); 
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching user:", error);
-        setIsLoading(false); 
       });
-  }, []);
+  }, [userStore]);
 
   const HTTP = "http://localhost:5000/chat";
   const queryPlan = "Create a structured learning plan for the subject:";
@@ -31,7 +35,7 @@ const Planner = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true); 
+    setIsLoading(true);
 
     const combinePrompt = `${queryPlan} ${prompt}. ${queryTime} ${timePeriod}. ${queryStyle}`;
     console.log(combinePrompt);
@@ -46,8 +50,8 @@ const Planner = () => {
           })
           .then((response) => {
             const skill = response.data;
-            setPlan(skill.day); 
-            setIsLoading(false); 
+            setPlan(skill.day);
+            setIsLoading(false);
           })
           .catch((error) => {
             console.error("Error adding skill:", error);
@@ -56,10 +60,10 @@ const Planner = () => {
       })
       .catch((error) => {
         console.error("Error generating plan:", error);
-        setIsLoading(false); 
+        setIsLoading(false);
       });
 
-    setPrompt(""); 
+    setPrompt("");
   };
 
   return (
@@ -90,7 +94,7 @@ const Planner = () => {
       </button>
 
       <section>
-        {isLoading && <p>Loading ...</p>} 
+        {isLoading && <p>Loading ...</p>}
         {plan.length > 0 && !isLoading && (
           <div className="p-4 border rounded bg-gray-100 mt-4">
             <h2 className="font-semibold">Learning Plan:</h2>
