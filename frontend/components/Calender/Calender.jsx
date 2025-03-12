@@ -13,15 +13,35 @@ const Calendar = () => {
   const [selectedSkill, setSelectedSkills] = useState();
   const [skillDay, setSkillDay] = useState([{}]);
   const [taskDay, setTaskDay] = useState([]);
+  const [userStore, setUserStore] = useState(null);
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("user")));
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser != null) {
+      setUserStore(storedUser);
+    }
   }, []);
+
+  useEffect(() => {
+    if ((userStore !== null) & (userStore !== undefined)) {
+      axios
+        .post("http://localhost:5000/get-user", userStore)
+        .then((response) => {
+          setUser(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching user:", error);
+        });
+    }
+  }, [userStore]);
 
   useEffect(() => {
     axios
       .post("http://localhost:5000/calendar-api/get-skills", user)
       .then((response) => {
+        if (response.data.skills.length === 0) {
+          return;
+        }
         const skill = response.data.skills;
         setUserSkills(skill);
         setSelectedSkills(skill[0]);

@@ -1,30 +1,189 @@
+/* Center the main planner container */
 .Planner {
-    margin: 1rem auto;
-    width: 90%;
-    max-width: 40rem;
-    text-align: center;
-    background-color: white;
-    padding: 2rem;
-    border-radius: 12px;
+  min-width: 100%;
+  width: 100%;
+  margin: 2vh auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--primary-font);
+  font-weight: var(--font-weight-normal);
 }
 
-.textbox{
-    width:300px;
-    height:150px;
-    border: 2px solid grey;
-    border-radius: 10px;
+/* Style the heading */
+.Planner h1 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-family: inherit;
+  font-weight: inherit;
 }
 
-.dropdown{
-    background : #2d2f31; 
-    color : white;
-    font-size : 1.2em;
-    cursor : pointer;
-    text-align:center;
-    border-radius: 10px;
-    margin: 1rem;
+.planSection {
+  width: 50vw;
+  padding: 50px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  overflow: hidden;
 }
 
-.button{
-    border-radius: 10px;
+.planSection h2 {
+  font-weight: 500;
+}
+
+.planSection h3 {
+  margin: 5vh 0;
+  font-weight: var(--font-weight-normal);
+  font-size: 1.5em;
+}
+
+.card {
+  max-width: 800px;
+  padding: 50px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  overflow: hidden;
+}
+
+/* Style the textarea */
+.textbox {
+  width: 100%;
+  min-height: 9vh;
+  max-height: 10vh;
+  height: 6vh;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  margin-bottom: 1rem;
+  font-size: 16px;
+}
+
+/* Style the dropdown container */
+.Planner > div {
+  width: 100%;
+  margin-bottom: 3rem;
+}
+
+/* Style the dropdown */
+.slider-container {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.slider-label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+  position: relative;
+  padding-left: 0.5rem;
+}
+
+.range-slider {
+  width: 100%;
+  height: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #ddd;
+  outline: none;
+  border-radius: 4px;
+}
+
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #4c5baf;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.range-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #4caf50;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Style the button */
+.button {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+.button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Style the section that contains the plan */
+.Planner section {
+  width: 100%;
+}
+
+/* Style the loading message */
+.Planner section p {
+  text-align: center;
+  color: #666;
+}
+
+/* Style the plan container */
+.p-4 {
+  padding: 1rem;
+}
+
+.border {
+  border: 1px solid #e2e8f0;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+
+.bg-gray-100 {
+  background-color: #f7fafc;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+/* Style the headings in the plan */
+.font-semibold {
+  font-weight: 600;
+}
+
+/* Style each day in the plan */
+.mb-4 {
+  margin-bottom: 1rem;
 }

@@ -33,16 +33,15 @@ app.post("/add-skill", async (req, res) => {
       return res.status(500).send("User not found");
     }
 
-    console.log(user.skills.length);
     if (user.skills.length <= 2) {
       //const raw = JSON.stringify(skill);
       //const clean = raw.replace(/[\\\n]/g, "");
       user.skills.push(skill);
       //console.log(user.skills);
       await user.save();
-      res.json(skill);
+      res.status(200).json(skill);
     } else {
-      console.log("skills array full");
+      res.status(400).send({ message: "error" });
     }
   } catch (err) {
     console.log(err);

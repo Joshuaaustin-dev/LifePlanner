@@ -11,6 +11,13 @@ body {
   height: 100vh;
 }
 
+.main-content {
+  margin: 0 auto;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+}
+
 /* center dashboard */
 .content-wrapper {
   margin-top: 70px;
