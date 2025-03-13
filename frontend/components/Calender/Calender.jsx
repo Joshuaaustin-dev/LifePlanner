@@ -56,7 +56,7 @@ const Calendar = () => {
             id: index,
             title: days.content,
             start: isAllDay ? days.date.split("T")[0] : days.date,
-            allDay: false,
+            allDay: isAllDay,
             source: "database",
           };
         });
