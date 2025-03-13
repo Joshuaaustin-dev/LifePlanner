@@ -5,41 +5,24 @@ import "./Home.css";
 const Home = () => {
   const [user, setUser] = useState(null);
   const [userText, setUserText] = useState(null);
+  const [userStore, setUserStore] = useState(null);
 
-  //////////// Use dummy user to retrieve and set in database, replace with real user later
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/dummy")
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user:", error);
-      });
+    setUserStore(JSON.parse(localStorage.getItem("user")));
   }, []);
 
-  const createUser = (e) => {
-    e.preventDefault();
-    axios
-      .get("http://localhost:5000/create-dummy")
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user:", error);
-      });
-  };
-  const deleteUser = (e) => {
-    axios
-      .get("http://localhost:5000/delete-dummy")
-      .then((response) => {
-        setUser({});
-        setUser(null);
-      })
-      .catch((error) => {
-        console.error("Error fetching user:", error);
-      });
-  };
+  useEffect(() => {
+    if (userStore) {
+      axios
+        .post("http://localhost:5000/get-user", { email: userStore.email })
+        .then((response) => {
+          setUser(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching user:", error);
+        });
+    }
+  }, [userStore]);
 
   useEffect(() => {
     if (user && user.skills) {
@@ -57,7 +40,7 @@ const Home = () => {
                   {skill.day.map((dayInfo, daysIndex) => (
                     <li key={daysIndex}>
                       <h5>
-                        {dayInfo.content} {dayInfo.date}
+                        ({new Date(dayInfo.date).toLocaleDateString()}) {dayInfo.content}
                       </h5>
                     </li>
                   ))}
@@ -72,13 +55,7 @@ const Home = () => {
     }
   }, [user]);
 
-  return (
-    <>
-      {userText}
-      {!user && <button onClick={createUser}>Create User</button>}
-      {user && <button onClick={deleteUser}>Delete User</button>}
-    </>
-  );
+  return <>{userText}</>;
 };
 
 export default Home;

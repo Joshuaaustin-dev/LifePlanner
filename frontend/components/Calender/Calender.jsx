@@ -49,18 +49,22 @@ const Calendar = () => {
         }
         const skill = response.data.skills;
         setUserSkills(skill);
-        setSelectedSkills(skill[0]);
-        const formatted = skill[0].day.map((days, index) => ({
-          id: index,
-          title: days.content,
-          start: days.date,
-          source: "database",
-        }));
+        setSelectedSkills(skill[skill.length - 1]);
+        const formatted = skill[skill.length - 1].day.map((days, index) => {
+          const isAllDay = days.date.split("T")[1] === "00:00:00.000Z";
+          return {
+            id: index,
+            title: days.content,
+            start: isAllDay ? days.date.split("T")[0] : days.date,
+            allDay: false,
+            source: "database",
+          };
+        });
         // Basically an event specific to FulLCalendar
         setSkillDay(formatted);
 
         // First skill in dropdown and all the days (Date, content)
-        setTaskDay(skill[0].day);
+        setTaskDay(skill[skill.length - 1].day);
       })
       .catch((error) => {
         console.error("Error fetching user:", error);
@@ -172,6 +176,7 @@ const Calendar = () => {
             right: "dayGridMonth,timeGridWeek",
           }}
           height="100vh"
+          timeZone="UTC"
           events={skillDay}
           editable={true}
           droppable={true}

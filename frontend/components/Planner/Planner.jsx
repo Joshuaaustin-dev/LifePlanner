@@ -142,7 +142,7 @@ const Planner = () => {
               {plan.map((day, index) => (
                 <div key={index} className="mb-4">
                   <h3>
-                    {day.date}: {day.content}
+                    {new Date(day.date).toLocaleDateString()}: {day.content}
                   </h3>
                 </div>
               ))}
