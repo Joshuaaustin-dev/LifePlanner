@@ -26,8 +26,12 @@ body {
   justify-content: center;
 }
 
-/* Responsive Design*/
+/* Responsive Design for smaller screens*/
 @media (max-width: 768px) {
+  .App {
+    flex-direction: column;
+  }
+
   .content-wrapper {
     padding: 10px;
   }
