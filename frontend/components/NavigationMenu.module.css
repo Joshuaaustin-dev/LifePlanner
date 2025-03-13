@@ -42,7 +42,7 @@
   align-items: center;
   padding: 12px;
   margin-bottom: 10px;
-  transition: all 0.2s ease-in-out;
+  transition: transform 0.6s ease, color 0.6s ease;
   text-align: left;
 }
 
@@ -73,7 +73,7 @@
 /* Active link highlighting */
 .sidebar .navItem:hover {
   color: #f4651d;
-  scale: 1.2;
+  scale: 1.1;
 }
 
 /*Media Queries for responsiveness*/
@@ -130,6 +130,7 @@
     margin: 0;
     font-size: 16px;
     padding: 8px 12px;
+    will-change: transform, color;
   }
 
   .sidebar .navItem {
