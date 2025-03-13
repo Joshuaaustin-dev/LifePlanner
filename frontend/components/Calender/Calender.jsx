@@ -4,7 +4,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { Draggable } from "@fullcalendar/interaction";
 import "./Calender.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 const Calendar = () => {
@@ -14,6 +14,10 @@ const Calendar = () => {
   const [skillDay, setSkillDay] = useState([{}]);
   const [taskDay, setTaskDay] = useState([]);
   const [userStore, setUserStore] = useState(null);
+
+  const [scheduledTasks, setScheduledTasks] = useState(new Set());
+
+  const draggableRef = useRef(null);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -35,6 +39,7 @@ const Calendar = () => {
     }
   }, [userStore]);
 
+  // Retrieve user skills
   useEffect(() => {
     axios
       .post("http://localhost:5000/calendar-api/get-skills", user)
@@ -48,9 +53,13 @@ const Calendar = () => {
         const formatted = skill[0].day.map((days, index) => ({
           id: index,
           title: days.content,
-          start: days.date.split("T")[0],
+          start: days.date,
+          source: "database",
         }));
+        // Basically an event specific to FulLCalendar
         setSkillDay(formatted);
+
+        // First skill in dropdown and all the days (Date, content)
         setTaskDay(skill[0].day);
       })
       .catch((error) => {
@@ -58,29 +67,99 @@ const Calendar = () => {
       });
   }, [user]);
 
-  /*
+  // Create a draggable for the right div
   useEffect(() => {
-    let draggableEl = document.getElementById("tasks");
-    new Draggable(draggableEl, {
-      itemSelector: ".task",
-      eventData: (eventEl) => ({
-        title: eventEl.getAttribute("data-title"),
-      }),
-    });
-  }, []);
-*/
+    if (draggableRef.current && taskDay.length > 0) {
+      const draggableInstance = new Draggable(draggableRef.current, {
+        itemSelector: ".task",
+        eventData: function (e) {
+          // Return the same event data as before
+          return {
+            id: e.dataset.index,
+            title: e.dataset.title,
+            source: "dragbox",
+          };
+        },
+      });
+      return () => {
+        draggableInstance.destroy(); // Ensures proper cleanup of the draggable instance
+      };
+    }
+  }, [taskDay]);
 
-  const handleChange = async (e) => {
+  useEffect(() => {
+    const updatedScheduledTasks = new Set(skillDay.map((event) => event.id));
+    setScheduledTasks(updatedScheduledTasks);
+  }, [skillDay]);
+
+  const handleSelectChange = async (e) => {
     const selected = JSON.parse(e.target.value);
     await setSelectedSkills(selected);
     const formatted = selected.day.map((days, index) => ({
       id: index,
       title: days.content,
-      start: days.date.split("T")[0],
+      start: days.date,
+      source: "database",
     }));
     setSkillDay(formatted);
     setTaskDay(selected.day);
   };
+
+  const handleEventDrop = (e) => {
+    const date = e.date.toISOString();
+    const skillID = e.draggedEl.dataset.id;
+
+    setScheduledTasks((prevScheduledTasks) => {
+      const updatedScheduledTasks = new Set(prevScheduledTasks);
+      updatedScheduledTasks.add(parseInt(e.draggedEl.dataset.index));
+      return updatedScheduledTasks;
+    });
+
+    axios
+      .post("http://localhost:5000/calendar-api/update-skill", {
+        user,
+        skillID,
+        date,
+      })
+      .then((response) => {
+        console.log("Added");
+      });
+  };
+
+  const handleEventChange = (e) => {
+    const date = e.event.start.toISOString();
+    const skillID = taskDay[e.event.id]._id;
+    axios
+      .post("http://localhost:5000/calendar-api/update-skill", {
+        user,
+        skillID,
+        date,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
+  const handleEventClick = (e) => {
+    const date = null;
+    const skillID = taskDay[e.event.id]._id;
+
+    setScheduledTasks((prevScheduledTasks) => {
+      const updatedScheduledTasks = new Set(prevScheduledTasks);
+      updatedScheduledTasks.delete(parseInt(e.event.id));
+      return updatedScheduledTasks;
+    });
+    e.event.remove();
+
+    axios
+      .post("http://localhost:5000/calendar-api/update-skill", {
+        user,
+        skillID,
+        date,
+      })
+      .then((response) => {});
+  };
+
   return (
     <div className="flex-container">
       <div className="calendar">
@@ -95,12 +174,18 @@ const Calendar = () => {
           height="100vh"
           events={skillDay}
           editable={true}
-          droppable={false}
+          droppable={true}
+          drop={handleEventDrop}
+          eventChange={handleEventChange}
+          eventClick={handleEventClick}
         ></FullCalendar>
       </div>
-      <div className="drag">
+      <div className="drag" ref={draggableRef}>
         <div className="task-header">
-          <select value={JSON.stringify(selectedSkill)} onChange={handleChange}>
+          <select
+            value={JSON.stringify(selectedSkill)}
+            onChange={handleSelectChange}
+          >
             {userSkills.map((skill, index) => (
               <option key={index} value={JSON.stringify(skill)}>
                 {skill.name}
@@ -108,18 +193,26 @@ const Calendar = () => {
             ))}
           </select>
         </div>
-        {/*
-        {taskDay.map((task, index) => (
-          <div
-            key={index}
-            className="task"
-            id="tasks"
-            data-title={task.content}
-          >
-            {task.content}
-          </div>
-        ))}
-        */}
+        {taskDay.map((task, index) => {
+          if (
+            !scheduledTasks.has(index) ||
+            task.date === new Date(0).toISOString()
+          ) {
+            return (
+              <div
+                key={index}
+                className="task"
+                data-index={index}
+                data-title={task.content}
+                data-id={task._id}
+              >
+                <p>{task.content}</p>
+              </div>
+            );
+          } else {
+            return null;
+          }
+        })}
       </div>
     </div>
   );
