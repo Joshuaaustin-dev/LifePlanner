@@ -22,6 +22,7 @@ Currently, two official plugins are available:
 # BACKEND
     npm install mongodb
     npm install axios openai
+    npm install bcrypt
 
 # Create an Env File for API KEY
     OPENAI_API_KEY=API_KEY

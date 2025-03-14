@@ -8,9 +8,34 @@ function ResetPassword() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
-  //TODO Handle password reset submission
+  // Handle password reset submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/reset-password",
+        {
+          email,
+          newPassword: password,
+        }
+      );
+
+      setMessage(response.data.message);
+      setError("");
+    } catch (err) {
+      setError(err.response?.data?.message || "Error resetting password.");
+    }
+  };
 
   return (
     <div className={`container-fluid ${styles.loginContainer}`}>
@@ -38,7 +63,8 @@ function ResetPassword() {
             </div>
           )}
 
-          <form>
+          {/*Form to hadnle password resetting*/}
+          <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <input
                 type="email"
@@ -49,9 +75,29 @@ function ResetPassword() {
                 required
               />
             </div>
+            <div className="mb-3">
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="form-control"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="form-control"
+                required
+              />
+            </div>
             <div className="text-center">
               <button type="submit" className="btn btn-primary mx-auto">
-                Submit Pa
+                Update Password
               </button>
             </div>
           </form>
