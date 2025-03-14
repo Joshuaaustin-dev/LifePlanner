@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./ToDoList.css"; 
+import styles from "./ToDoList.module.css"; // Import CSS Module
 
 const ToDoList = () => {
     const [user, setUser] = useState(null);
@@ -32,41 +32,33 @@ const ToDoList = () => {
             const filteredGoals = user.skills
                 .flatMap((skill) =>
                     skill.day
-                        .filter((d) => new Date(d.date) >= new Date(formattedDate)) 
+                        .filter((d) => new Date(d.date) >= new Date(formattedDate))
                         .map((dayInfo) => ({
                             id: dayInfo._id,
                             content: dayInfo.content,
-                            completed: dayInfo.completed || false,
                             date: new Date(dayInfo.date),
                         }))
                 )
-                .sort((a, b) => a.date - b.date); 
+                .sort((a, b) => a.date - b.date);
 
-            const nextThreeGoals = filteredGoals.slice(0, 3);
-            setGoals(nextThreeGoals);
+            setGoals(filteredGoals.slice(0, 3));
         }
     }, [user]);
 
     return (
-        <div>
-            <main>
-                <div className="ToDoList-border">
-                    <h2>ToDo List</h2>
-                    {goals.length > 0 ? (
-                        <ul>
-                            {goals.map((goal) => (
-                                <li key={goal.id}>
-                                    <span className={goal.completed ? "line-through" : ""}>
-                                        {goal.content} - {goal.date.toDateString()}
-                                    </span>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No upcoming goals.</p>
-                    )}
-                </div>
-            </main>
+        <div className={styles.container}>
+            <h2 className={styles.title}>To-Do List</h2>
+            {goals.length > 0 ? (
+                <ul className={styles.list}>
+                    {goals.map((goal) => (
+                        <li key={goal.id} className={styles.listItem}>
+                            {goal.content} - <span className={styles.goalDate}>{goal.date.toDateString()}</span>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p className={styles.noGoals}>No upcoming goals.</p>
+            )}
         </div>
     );
 };

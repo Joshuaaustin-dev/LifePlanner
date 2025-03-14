@@ -1,10 +1,9 @@
-/* Goals.module.css */
 .goalsContainer {
     background: #ffffff;
-    color: #333;
+    color: #2e3a59;
     padding: 2rem;
-    border-radius: 1.5rem;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     max-width: 750px;
     width: 100%;
     height: auto;
@@ -12,10 +11,13 @@
     overflow-y: auto;
 }
 
+
+
 .title {
     font-size: 1.8rem;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 1.2rem;
+    color: #2e3a59;
 }
 
 .list {
@@ -28,16 +30,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(0, 0, 0, 0.05);
+    background: #f7f9fc;
     padding: 0.8rem 1rem;
     margin: 0.5rem 0;
     border-radius: 8px;
     font-size: 1rem;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
+    color: #4a5b75;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .listItem:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .checkbox {
@@ -45,7 +51,7 @@
     width: 18px;
     height: 18px;
     border-radius: 4px;
-    border: 2px solid #555;
+    border: 2px solid #f4651d;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     margin-right: 10px;
@@ -53,8 +59,8 @@
 }
 
 .checkbox:checked {
-    background-color: #555;
-    border: 2px solid #555;
+    background-color: #f4651d;
+    border: 2px solid #f4651d;
 }
 
 .checkbox:checked::before {
@@ -71,6 +77,7 @@
 .completed {
     text-decoration: line-through;
     opacity: 0.7;
+    color: #4a5b75;
 }
 
 @media (max-width: 768px) {
@@ -78,4 +85,18 @@
         width: 90%;
         padding: 1.5rem;
     }
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.goalsContainer {
+    animation: fadeIn 0.8s ease-out;
 }

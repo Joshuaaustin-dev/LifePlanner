@@ -1,12 +1,12 @@
 .dashboard-container {
-    background-color: #4a5568; 
+    background-color: #2e3a59; 
     color: white;
     padding: 1.5rem;
     text-align: center;
     font-size: 1.8rem;
     font-weight: bold;
     margin: 0 auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 html, body {
@@ -14,11 +14,11 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden; 
     font-family: 'Arial', sans-serif;
-    background-color: #f0f2f5; 
+    background: linear-gradient(135deg, #f4f7fb, #dfe8f0);
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 main {
@@ -27,13 +27,14 @@ main {
     align-items: flex-start;
     padding: 30px;
     gap: 30px;
-    width: 90%;        
+    width: 90%;
     box-sizing: border-box;
-    margin: 0 auto;     
+    margin: 0 auto;
     flex-grow: 1;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
+/* Column Layout */
 .column-container {
     display: flex;
     flex-direction: column;
@@ -41,41 +42,41 @@ main {
     width: 65%;
 }
 
+/* Goals Section */
 .goals-container {
     padding: 15px;
     background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    transition: transform 0.2s ease-in-out;
     overflow: hidden;
 }
 
-
+/* Horizontal Bar Chart */
 .horizontalBarChart {
     display: flex;
     flex-direction: column;
     align-items: center;
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 25px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    transition: transform 0.2s ease-in-out;
     overflow: hidden;
 }
 
-
+/* To-Do List Section */
 .todo-list-container {
     width: 30%;
     background: #ffffff;
     padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out;
     overflow: hidden;
 }
 
+/* Responsive Design */
 @media (max-width: 1024px) {
     main {
         flex-direction: column;
@@ -100,4 +101,21 @@ main {
     .todo-list-container {
         width: 100%;
     }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.dashboard-container,
+.goals-container,
+.horizontalBarChart,
+.todo-list-container {
+    animation: fadeIn 0.4s ease-out;
 }

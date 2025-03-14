@@ -64,8 +64,8 @@ const HorizontalBarChart = ({ updateTrigger }) => {
           <YAxis className="axis-text" dataKey="name" type="category" />
           <Tooltip wrapperClassName="tooltip-style" />
           <Legend verticalAlign="top" align="right" className="legend-style" />
-          <Bar dataKey="total" fill="red" barSize={25} radius={[6, 6, 0, 0]} name="Total" />
-          <Bar dataKey="completed" fill="#42a5f5" barSize={25} radius={[6, 6, 0, 0]} name="Completed" />
+          <Bar dataKey="total" fill="#2e3a59" barSize={25} radius={[6, 6, 0, 0]} name="Total" />
+          <Bar dataKey="completed" fill="#f4651d" barSize={25} radius={[6, 6, 0, 0]} name="Completed" />
         </BarChart>
       </ResponsiveContainer>
     </div>
