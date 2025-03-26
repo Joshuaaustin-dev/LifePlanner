@@ -10,6 +10,7 @@ import User from "./models/User.js";
 import calendarRoutes from "./routes/calendarRoutes.js";
 import dummyRoutes from "./routes/dummyRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import shopRoutes from "./routes/shopRoutes.js"
 
 config();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/calendar-api", calendarRoutes);
 app.use("/", dummyRoutes);
 app.use("/", userRoutes);
+app.use("/", shopRoutes);
 
 // MongoDB connection string - Update this based on your cluster
 const mongoURI = process.env.DB_URI;
@@ -94,6 +96,27 @@ app.patch("/update-goal/:id", async (req, res) => {
     res.status(500).send("Error updating goal");
   }
 });
+
+app.post("/update-tokens", async (req, res) => {
+  const { email, tokens } = req.body;
+
+  try {
+    const user = await User.findOneAndUpdate(
+      { email },
+      { tokens },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ message: "Tokens updated", tokens: user.tokens });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating tokens", error });
+  }
+});
+
 
 // Connect to MongoDB
 mongoose
