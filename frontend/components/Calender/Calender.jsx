@@ -183,6 +183,7 @@ const Calendar = () => {
           drop={handleEventDrop}
           eventChange={handleEventChange}
           eventClick={handleEventClick}
+          handleWindowResize={true}
         ></FullCalendar>
       </div>
       <div className="drag" ref={draggableRef}>

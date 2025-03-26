@@ -1,13 +1,12 @@
 .flex-container {
   display: flex;
   flex-direction: row;
-  width: 1670px;
   height: 100vh;
   overflow: hidden;
 }
 .drag {
   width: 20vw;
-  margin: 0 auto;
+
   text-align: center;
   overflow-y: auto;
 }
@@ -25,6 +24,11 @@
   font-size: 1.75rem;
   line-height: 80px;
 }
+
+.task-header select {
+  width: 80%;
+}
+
 .task {
   cursor: pointer;
   color: var(--fc-event-text-color);
@@ -78,5 +82,15 @@
   top: 0;
   right: 5px;
   font-weight: bold;
-  color: #ff3333;
+}
+
+.fc-event,
+.fc-event-dot {
+  font-family: var(--primary-font);
+  font-weight: 300;
+}
+
+.fc-daygrid-dot-event .fc-event-title {
+  border-color: white;
+  font-weight: 300;
 }
