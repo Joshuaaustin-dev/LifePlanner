@@ -57,8 +57,14 @@ const Planner = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-
-    // PROMPT IS IN DAYS NOW
+  
+    // Ensure the user has enough tokens
+    if (user.tokens < 10) {
+      setIsError(true);
+      setIsLoading(false);
+      return;
+    }
+  
     const combinePrompt = `${queryPlan} ${prompt}. ${queryTime} ${timePeriod} days. ${queryStyle}`;
     axios
       .post(`${HTTP}`, { prompt: combinePrompt })
@@ -69,9 +75,23 @@ const Planner = () => {
             skill: res.data,
           })
           .then((response) => {
-            setIsError(false);
             const skill = response.data;
+  
+            axios
+              .post("http://localhost:5000/update-tokens", {
+                email: user.email,
+                tokens: user.tokens - 10, 
+              })
+              .then((tokenResponse) => {
+                setUser((prevUser) => ({
+                  ...prevUser,
+                  tokens: prevUser.tokens - 10, 
+                }));
+              })
+              .catch((error) => console.error("Error updating tokens:", error));
+  
             setPlan(skill.day);
+            setIsError(false);
             setIsLoading(false);
           })
           .catch((error) => {
@@ -84,12 +104,14 @@ const Planner = () => {
         console.error("Error generating plan:", error);
         setIsLoading(false);
       });
-
+  
     setPrompt("");
   };
+                
 
   return (
     <div className="Planner responsive">
+
       <div className="card">
         <h1>Generate a new plan!</h1>
         <textarea

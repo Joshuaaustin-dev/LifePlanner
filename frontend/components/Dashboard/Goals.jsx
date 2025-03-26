@@ -57,7 +57,7 @@ const Goals = ({ onGoalUpdate }) => {
             );
 
             if (onGoalUpdate) {
-                onGoalUpdate(); // Notify Dashboard to update chart
+                onGoalUpdate(); 
             }
         } catch (error) {
             console.error("Error updating goal:", error);

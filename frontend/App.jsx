@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import Planner from "./components/Planner/Planner";
 import Profile from "./components/Profile/Profile";
 import Calendar from "./components/Calender/Calender";
+import Shop from "./components/Shop/Shop";
 import Login from "./components/Login/Login";
 import Logout from "./components/Login/Logout";
 import CreateNewUser from "./components/Login/CreateNewUser";
@@ -58,6 +59,8 @@ function App() {
                 <Route path="/Planner" element={<Planner />} />
                 <Route path="/Profile" element={<Profile />} />
                 <Route path="/Calender" element={<Calendar />} />
+                <Route path="/Shop" element={<Shop />} />
+
                 <Route
                   path="/Logout"
                   element={<Logout setIsAuthenticated={setIsAuthenticated} />}
