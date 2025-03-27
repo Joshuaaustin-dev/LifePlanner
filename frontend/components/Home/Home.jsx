@@ -35,11 +35,12 @@ const Home = () => {
     "Don’t wait. The time will never be just right. – Napoleon Hill",
   ];
 
-  // Function to get a random greeting and quote
+  // Function to get a random greeting
   const getRandomGreeting = () => {
     return greetings[Math.floor(Math.random() * greetings.length)];
   };
 
+  // Function to get a random quote
   const getRandomQuote = () => {
     return dailyQuotes[Math.floor(Math.random() * dailyQuotes.length)];
   };
