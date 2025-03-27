@@ -54,14 +54,7 @@ const Planner = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-
-    // Ensure the user has enough tokens
-    if (user.tokens < 10) {
-      setIsError(true);
-      setIsLoading(false);
-      return;
-    }
-
+  
     const combinePrompt = `${queryPlan} ${prompt}. ${queryTime} ${timePeriod} days. ${queryStyle}`;
     axios
       .post(`${HTTP}`, { prompt: combinePrompt })
