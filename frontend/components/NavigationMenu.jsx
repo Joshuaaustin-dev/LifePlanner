@@ -8,6 +8,7 @@ import { CgProfile } from "react-icons/cg";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { FaShop } from "react-icons/fa6";
 import { FaSignOutAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const NavigationMenu = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -40,27 +41,27 @@ const NavigationMenu = () => {
             styles.navLinks
           }`}
         >
-          <Nav.Link href="/" className={styles.navLogo}>
+          <Link to="/" className={styles.navLogo}>
             <img src={logo} alt="Logo" className={styles.logo} />
-          </Nav.Link>
-          <Nav.Link href="/Dashboard" className={styles.navItem}>
+          </Link>
+          <Link to="/Dashboard" className={styles.navItem}>
             <TfiDashboard /> <span>Dashboard</span>
-          </Nav.Link>
-          <Nav.Link href="/Planner" className={styles.navItem}>
+          </Link>
+          <Link to="/Planner" className={styles.navItem}>
             <IoMdBook /> <span>Planner</span>
-          </Nav.Link>
-          <Nav.Link href="/Profile" className={styles.navItem}>
+          </Link>
+          <Link to="/Profile" className={styles.navItem}>
             <CgProfile /> <span>Profile</span>
-          </Nav.Link>
-          <Nav.Link href="/Calender" className={styles.navItem}>
+          </Link>
+          <Link to="/Calender" className={styles.navItem}>
             <FaRegCalendarAlt /> <span>Calendar</span>
-          </Nav.Link>
-          <Nav.Link href="/Shop" className={styles.navItem}>
+          </Link>
+          <Link to="/Shop" className={styles.navItem}>
             <FaShop /> <span>Shop</span>
-          </Nav.Link>
-          <Nav.Link href="/Logout" className={styles.navItem}>
+          </Link>
+          <Link to="/Logout" className={styles.navItem}>
             <FaSignOutAlt /> <span>Log out</span>
-          </Nav.Link>
+          </Link>
         </Nav>
       </Container>
     </Navbar>
