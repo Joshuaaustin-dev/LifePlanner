@@ -5,7 +5,6 @@ import "./Home.css";
 const Home = () => {
   const [user, setUser] = useState(null);
   const [userText, setUserText] = useState(null);
-  const [userStore, setUserStore] = useState(null);
 
   // Greeting messages
   const greetings = [
@@ -45,21 +44,22 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setUserStore(JSON.parse(localStorage.getItem("user")));
+    axios
+      .post(
+        "http://localhost:5000/get-user",
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        // set user
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user:", error);
+      });
   }, []);
-
-  useEffect(() => {
-    if (userStore) {
-      axios
-        .post("http://localhost:5000/get-user", { email: userStore.email })
-        .then((response) => {
-          setUser(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching user:", error);
-        });
-    }
-  }, [userStore]);
 
   useEffect(() => {
     if (user && user.skills) {

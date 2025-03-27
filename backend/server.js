@@ -5,6 +5,7 @@ import { config } from "dotenv";
 import bodyParser from "body-parser";
 import { OpenAI } from "openai";
 import User from "./models/User.js";
+import cookieParser from "cookie-parser";
 
 // Routes
 import calendarRoutes from "./routes/calendarRoutes.js";
@@ -15,10 +16,21 @@ import shopRoutes from "./routes/shopRoutes.js";
 config();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const app = express();
+app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "http://localhost:5000",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
+// Accesses the /routes files
 app.use("/calendar-api", calendarRoutes);
 app.use("/", dummyRoutes);
 app.use("/", userRoutes);

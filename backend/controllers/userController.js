@@ -1,17 +1,30 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+export const checkAuth = async (req, res) => {
+  const token = req.cookies.access_token;
+  if (token === undefined || token === null) {
+    return res.json(false);
+  }
+  res.json(true);
+};
 
 export const getUser = async (req, res) => {
   const user = req.body;
   try {
     // Check if the email already exists
-    const existingUser = await User.findOne({ email: user.email });
+    const existingUser = await User.findOne({ email: user.email }).select(
+      "-password"
+    );
     if (existingUser) {
-      res.status(200).json(existingUser);
+      return res.status(200).json(existingUser);
+    } else {
+      throw "No existing user";
     }
   } catch (err) {
     console.log(err);
-    res.status(500).send("Error retrieving user");
+    return res.status(500).send("Error retrieving user");
   }
 };
 
@@ -26,7 +39,7 @@ export const register = async (req, res) => {
       return res.status(400).send("User already exists");
     }
 
-      // Hash & salt the password
+    // Hash & salt the password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -55,15 +68,36 @@ export const login = async (req, res) => {
     //Checks if the password of the user matches compare the provided password with hashed password
     const isMatch = await bcrypt.compare(password, user.password);
 
-      if (!isMatch) {
+    if (!isMatch) {
       return res.status(400).send("Incorrect password");
     }
 
-    // Response if the credentials match a
+    // Have ai generate a secure 32 byte JWT secret
+    const token = jwt.sign(
+      { name: user.name, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    // Set HTTP-only cookie
+    res.cookie("access_token", token, {
+      httpOnly: true,
+      sameSite: "strict", // CSRF protection
+      maxAge: 1 * 60 * 60 * 1000, // 1 hour in milliseconds
+      secure: false,
+      path: "/",
+    });
+
+    // Cookie has user info
+    res.status(200).json({
+      message: "Login successful",
+    });
+
+    /*
     res.status(200).json({
       message: "Login successful",
       user: { name: user.name, email: user.email },
     });
+    */
   } catch (err) {
     res.status(500).json({ message: "Error logging in" });
   }
@@ -76,13 +110,14 @@ export const resetPassword = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: "User not found. Please try again." });
+      return res
+        .status(404)
+        .json({ message: "User not found. Please try again." });
     }
 
     // Update password hash before saving
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
-
 
     user.password = hashedPassword;
     await user.save();

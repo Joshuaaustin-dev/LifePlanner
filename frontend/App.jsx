@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import NavigationMenu from "./components/NavigationMenu";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,12 +17,44 @@ import CreateNewUser from "./components/Login/CreateNewUser";
 import ResetPassword from "./components/Login/ResetPassword";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    () => !!localStorage.getItem("user")
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true); // New loading state
+
+  const checkAuth = () => {
+    axios
+      .post(
+        "http://localhost:5000/check-auth",
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        if (response.data === true) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setIsAuthenticated(false); // Handle error case by setting to false
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false once the check is complete
+      });
+  };
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  // Do not render routes until the authentication check is done
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading indicator
+  }
 
   const handleLogout = () => {
-    localStorage.removeItem("user"); // Remove user from storage
     setIsAuthenticated(false);
   };
 
@@ -70,7 +103,13 @@ function App() {
             {/* Redirect to login if the user tries to access a protected route while not authenticated */}
             <Route
               path="*"
-              element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
+              element={
+                isAuthenticated ? (
+                  <Navigate to="/Home" />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
             />
           </Routes>
         </div>

@@ -7,9 +7,8 @@ export const updateTokens = async (req, res) => {
       { tokens },
       { new: true }
     );
-
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(401).json({ message: "User not found" });
     }
 
     res.json({ message: "Tokens updated", tokens: user.tokens });

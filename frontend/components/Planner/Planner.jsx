@@ -15,26 +15,23 @@ const Planner = () => {
   const speedOptions = ["Slow", "Moderate", "Fast"];
 
   useEffect(() => {
-    setIsLoading(true);
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser != null) {
-      setUserStore(storedUser);
-    }
+    axios
+      .post(
+        "http://localhost:5000/get-user",
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        // set user
+        setUser(response.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching user:", error);
+      });
   }, []);
-
-  useEffect(() => {
-    if ((userStore !== null) & (userStore !== undefined)) {
-      axios
-        .post("http://localhost:5000/get-user", userStore)
-        .then((response) => {
-          setUser(response.data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching user:", error);
-        });
-    }
-  }, [userStore]);
 
   const HTTP = "http://localhost:5000/chat";
   const queryPlan = "Create a structured learning plan for the subject:";
@@ -57,14 +54,14 @@ const Planner = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-  
+
     // Ensure the user has enough tokens
     if (user.tokens < 10) {
       setIsError(true);
       setIsLoading(false);
       return;
     }
-  
+
     const combinePrompt = `${queryPlan} ${prompt}. ${queryTime} ${timePeriod} days. ${queryStyle}`;
     axios
       .post(`${HTTP}`, { prompt: combinePrompt })
@@ -76,20 +73,20 @@ const Planner = () => {
           })
           .then((response) => {
             const skill = response.data;
-  
+
             axios
               .post("http://localhost:5000/update-tokens", {
                 email: user.email,
-                tokens: user.tokens - 10, 
+                tokens: user.tokens - 10,
               })
               .then((tokenResponse) => {
                 setUser((prevUser) => ({
                   ...prevUser,
-                  tokens: prevUser.tokens - 10, 
+                  tokens: prevUser.tokens - 10,
                 }));
               })
               .catch((error) => console.error("Error updating tokens:", error));
-  
+
             setPlan(skill.day);
             setIsError(false);
             setIsLoading(false);
@@ -104,14 +101,12 @@ const Planner = () => {
         console.error("Error generating plan:", error);
         setIsLoading(false);
       });
-  
+
     setPrompt("");
   };
-                
 
   return (
     <div className="Planner responsive">
-
       <div className="card">
         <h1>Generate a new plan!</h1>
         <textarea

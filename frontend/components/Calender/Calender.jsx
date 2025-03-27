@@ -13,37 +13,42 @@ const Calendar = () => {
   const [selectedSkill, setSelectedSkills] = useState();
   const [skillDay, setSkillDay] = useState([{}]);
   const [taskDay, setTaskDay] = useState([]);
-  const [userStore, setUserStore] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
 
   const [scheduledTasks, setScheduledTasks] = useState(new Set());
 
   const draggableRef = useRef(null);
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser != null) {
-      setUserStore(storedUser);
-    }
+    axios
+      .post(
+        "http://localhost:5000/get-user",
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        // set user
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user:", error);
+      });
   }, []);
-
-  useEffect(() => {
-    if ((userStore !== null) & (userStore !== undefined)) {
-      axios
-        .post("http://localhost:5000/get-user", userStore)
-        .then((response) => {
-          setUser(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching user:", error);
-        });
-    }
-  }, [userStore]);
 
   // Retrieve user skills
   useEffect(() => {
+    setIsLoading(true);
     axios
-      .post("http://localhost:5000/calendar-api/get-skills", user)
+      .post("http://localhost:5000/calendar-api/get-skills", user, {
+        withCredentials: true,
+      })
       .then((response) => {
+        if (response.data.skills === undefined) {
+          return {};
+        }
+        setIsLoading(false);
         if (response.data.skills.length === 0) {
           return;
         }
@@ -189,7 +194,7 @@ const Calendar = () => {
       <div className="drag" ref={draggableRef}>
         <div className="task-header">
           <select
-            value={JSON.stringify(selectedSkill)}
+            value={isLoading ? "loading" : JSON.stringify(selectedSkill)}
             onChange={handleSelectChange}
           >
             {userSkills.map((skill, index) => (
@@ -199,6 +204,7 @@ const Calendar = () => {
             ))}
           </select>
         </div>
+
         {taskDay.map((task, index) => {
           if (
             !scheduledTasks.has(index) ||
