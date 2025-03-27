@@ -1,0 +1,54 @@
+.active {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  border-bottom: 3px solid #f4651d;
+  transition: left 0.3s ease, width 0.3s ease;
+}
+
+.count-box {
+  position: relative;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.count-box h5 {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.count-box p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  padding-top: 5px;
+}
+
+.skills,
+.achievements {
+  margin-top: 20px;
+}
+
+.skills ul,
+.achievements ul {
+  list-style: none;
+  padding: 0;
+}
+
+.skills li,
+.achievements li {
+  margin: 5px 0;
+}
+
+.row.mb-4 {
+  margin-bottom: 30px;
+}
