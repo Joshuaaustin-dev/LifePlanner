@@ -15,15 +15,17 @@ function Login({ setIsAuthenticated }) {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/login",
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
 
       if (response.status === 200) {
         // Store user data in localStorage or state
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-
         // Set authentication state
         setIsAuthenticated(true);
 

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
+import useUser from "../Hooks/userUser";
 import axios from "axios";
 import "./Home.css";
 
 const Home = () => {
-  const [user, setUser] = useState(null);
+  const { user } = useUser();
   const [userText, setUserText] = useState(null);
-  const [userStore, setUserStore] = useState(null);
 
   // Greeting messages
   const greetings = [
@@ -44,23 +44,6 @@ const Home = () => {
   const getRandomQuote = () => {
     return dailyQuotes[Math.floor(Math.random() * dailyQuotes.length)];
   };
-
-  useEffect(() => {
-    setUserStore(JSON.parse(localStorage.getItem("user")));
-  }, []);
-
-  useEffect(() => {
-    if (userStore) {
-      axios
-        .post("http://localhost:5000/get-user", { email: userStore.email })
-        .then((response) => {
-          setUser(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching user:", error);
-        });
-    }
-  }, [userStore]);
 
   useEffect(() => {
     if (user && user.skills) {

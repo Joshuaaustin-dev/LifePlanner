@@ -16,7 +16,9 @@ export const addTokens = async (req, res) => {
     user.Tokens += tokens;
     await user.save();
 
-    res.status(200).json({ message: `Added ${tokens} tokens`, tokens: user.Tokens });
+    res
+      .status(200)
+      .json({ message: `Added ${tokens} tokens`, tokens: user.Tokens });
   } catch (error) {
     console.error("Error updating tokens:", error);
     res.status(500).send("Error updating tokens");
@@ -43,7 +45,9 @@ export const deductTokens = async (req, res) => {
     user.Tokens -= tokens;
     await user.save();
 
-    res.status(200).json({ message: `Deducted ${tokens} tokens`, tokens: user.Tokens });
+    res
+      .status(200)
+      .json({ message: `Deducted ${tokens} tokens`, tokens: user.Tokens });
   } catch (error) {
     console.error("Error deducting tokens:", error);
     res.status(500).send("Error deducting tokens");

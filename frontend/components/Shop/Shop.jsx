@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useUser from "../Hooks/userUser";
-import Ticket from "./Ticket"; 
+import Ticket from "./Ticket";
 import shopStyles from "./Shop.module.css";
 
 const Shop = () => {
@@ -20,13 +20,14 @@ const Shop = () => {
     try {
       const response = await fetch("http://localhost:5000/buy-ticket", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user._id, amount }),
       });
 
       const data = await response.json();
       if (response.ok) {
-        setTokens(data.tokens); 
+        setTokens(data.tokens);
       } else {
         setPurchaseError(data.message || "Failed to buy tokens.");
       }
@@ -43,9 +44,7 @@ const Shop = () => {
         <h1>Shop</h1>
       </header>
 
-      <div className={shopStyles.currentTokens}>
-        Current Tokens: {tokens}
-      </div>
+      <div className={shopStyles.currentTokens}>Current Tokens: {tokens}</div>
 
       <div className={shopStyles.ticketsContainer}>
         <div className={shopStyles.ticketDiv}>

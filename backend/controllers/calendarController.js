@@ -2,17 +2,21 @@ import axios from "axios";
 import User from "../models/User.js";
 
 export const retrieveSkills = async (req, res) => {
-  const userData = req.body;
-  const response = await axios.post("http://localhost:5000/get-user", userData);
-  const user = response.data;
-  if (user == null || user.skills == null) {
-    res.status(500).send("Error retrieving user");
-  }
-  if (user.skills.length === 0) {
-    res.json({ skills: user.skills });
-  } else {
-    let userSkills = user.skills;
-    res.json({ skills: userSkills });
+  try {
+    const user = await User.findOne({ email: req.body.email }).select(
+      "-password"
+    );
+    if (user === undefined || user.skills == null) {
+      throw "No existing user";
+    }
+    if (user.skills.length === 0) {
+      return res.json({ skills: user.skills });
+    } else {
+      let userSkills = user.skills;
+      return res.json({ skills: userSkills });
+    }
+  } catch (error) {
+    return res.json({ message: error });
   }
 };
 
