@@ -103,6 +103,17 @@ export const login = async (req, res) => {
   }
 };
 
+export const logout = async (req, res) => {
+  res.clearCookie("access_token", {
+    httpOnly: true,
+    sameSite: "strict", // CSRF protection
+    maxAge: 0, // expire
+    secure: false,
+    path: "/",
+  });
+  res.status(200).send("Logged out");
+};
+
 //Reset Password method
 export const resetPassword = async (req, res) => {
   const { email, newPassword } = req.body;

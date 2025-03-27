@@ -14,7 +14,6 @@ import "./HorizontalBarChart.css";
 
 const HorizontalBarChart = ({ updateTrigger }) => {
   const [chartData, setChartData] = useState([]);
-  const [userStore, setUserStore] = useState(null);
 
   useEffect(() => {
     axios

@@ -1,6 +1,7 @@
 import express from "express";
 import {
   checkAuth,
+  logout,
   getUser,
   login,
   register,
@@ -11,6 +12,7 @@ const router = express.Router();
 
 // Public Routes
 router.post("/check-auth", checkAuth);
+router.post("/logout", logout);
 router.post("/login", login);
 router.post("/register", register);
 router.post("/reset-password", resetPassword);

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
+import useUser from "../Hooks/userUser";
 import axios from "axios";
 import "./Home.css";
 
 const Home = () => {
-  const [user, setUser] = useState(null);
+  const { user } = useUser();
   const [userText, setUserText] = useState(null);
 
   // Greeting messages
@@ -42,24 +43,6 @@ const Home = () => {
   const getRandomQuote = () => {
     return dailyQuotes[Math.floor(Math.random() * dailyQuotes.length)];
   };
-
-  useEffect(() => {
-    axios
-      .post(
-        "http://localhost:5000/get-user",
-        {},
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        // set user
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user:", error);
-      });
-  }, []);
 
   useEffect(() => {
     if (user && user.skills) {

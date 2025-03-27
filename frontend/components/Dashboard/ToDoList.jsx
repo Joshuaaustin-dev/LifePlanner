@@ -1,29 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./ToDoList.module.css"; // Import CSS Module
+import useUser from "../Hooks/userUser";
 
 const ToDoList = () => {
-  const [user, setUser] = useState(null);
+  const { user } = useUser();
   const [goals, setGoals] = useState([]);
-  const [userStore, setUserStore] = useState(null);
-
-  useEffect(() => {
-    axios
-      .post(
-        "http://localhost:5000/get-user",
-        {},
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        // set user
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user:", error);
-      });
-  }, []);
 
   useEffect(() => {
     if (user && user.skills) {

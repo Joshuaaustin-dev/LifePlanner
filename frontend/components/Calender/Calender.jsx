@@ -6,9 +6,10 @@ import { Draggable } from "@fullcalendar/interaction";
 import "./Calender.css";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import useUser from "../Hooks/userUser";
 
 const Calendar = () => {
-  const [user, setUser] = useState(null);
+  const { user, error } = useUser();
   const [userSkills, setUserSkills] = useState([]);
   const [selectedSkill, setSelectedSkills] = useState();
   const [skillDay, setSkillDay] = useState([{}]);
@@ -18,24 +19,6 @@ const Calendar = () => {
   const [scheduledTasks, setScheduledTasks] = useState(new Set());
 
   const draggableRef = useRef(null);
-
-  useEffect(() => {
-    axios
-      .post(
-        "http://localhost:5000/get-user",
-        {},
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        // set user
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user:", error);
-      });
-  }, []);
 
   // Retrieve user skills
   useEffect(() => {

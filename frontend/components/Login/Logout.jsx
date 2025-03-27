@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Logout = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     setIsAuthenticated(false); // Update authentication state
-    res.clearCookie("access_token");
+    axios.post("http://localhost:5000/logout", {}, { withCredentials: true });
     navigate("/login"); // Redirect to login page
   }, [setIsAuthenticated, navigate]);
 

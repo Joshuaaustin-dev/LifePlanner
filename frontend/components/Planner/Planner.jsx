@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./Planner.css";
+import useUser from "../Hooks/userUser";
 
 const Planner = () => {
   const [prompt, setPrompt] = useState("");
@@ -9,29 +10,9 @@ const Planner = () => {
   const [plan, setPlan] = useState([]);
   const [timePeriod, setTimePeriod] = useState("2");
   const [goalSpeed, setGoalSpeed] = useState("1");
-  const [user, setUser] = useState(null);
-  const [userStore, setUserStore] = useState(null);
+  const { user } = useUser();
 
   const speedOptions = ["Slow", "Moderate", "Fast"];
-
-  useEffect(() => {
-    axios
-      .post(
-        "http://localhost:5000/get-user",
-        {},
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        // set user
-        setUser(response.data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching user:", error);
-      });
-  }, []);
 
   const HTTP = "http://localhost:5000/chat";
   const queryPlan = "Create a structured learning plan for the subject:";
@@ -54,7 +35,7 @@ const Planner = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-  
+
     const combinePrompt = `${queryPlan} ${prompt}. ${queryTime} ${timePeriod} days. ${queryStyle}`;
     axios
       .post(`${HTTP}`, { prompt: combinePrompt })

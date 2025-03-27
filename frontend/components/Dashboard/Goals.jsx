@@ -1,30 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./Goals.module.css"; // Import the CSS module
+import useUser from "../Hooks/userUser";
 
 const Goals = ({ onGoalUpdate }) => {
-  const [user, setUser] = useState(null);
+  const { user } = useUser();
   const [goals, setGoals] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [userStore, setUserStore] = useState(null);
-
-  useEffect(() => {
-    axios
-      .post(
-        "http://localhost:5000/get-user",
-        {},
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        // set user
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user:", error);
-      });
-  }, []);
 
   useEffect(() => {
     if (user && user.skills) {
