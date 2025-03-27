@@ -1,0 +1,144 @@
+/* Edit Profile button styling */
+.btn-edit-profile {
+  background: #f4651d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-edit-profile:hover {
+  background: #bd4e16;
+  scale: 1.1;
+}
+
+/* Profile Overlay effect */
+.edit-profile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Form Styling*/
+.edit-profile-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+}
+
+/* Profile Form styling */
+.profile-image-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-image-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #f4651d;
+  margin-bottom: 10px;
+}
+
+/* Form Styling */
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+  text-align: left;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Buttons Styling */
+.btn-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #333;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.btn-close:hover {
+  transform: scale(1.2);
+}
+
+.btn-preview-image {
+  background: #f4651d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-preview-image:hover {
+  background: #bd4e16;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-cancel,
+.btn-save {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.btn-cancel {
+  background: #ccc;
+}
+
+.btn-cancel:hover {
+  background: #999;
+}
+
+.btn-save {
+  background: #f4651d;
+  color: white;
+}
+
+.btn-save:hover {
+  background: #bd4e16;
+}

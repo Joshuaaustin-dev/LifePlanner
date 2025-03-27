@@ -1,21 +1,29 @@
+import "./EditProfile.css";
+
+import { useState } from "react";
+import EditProfileForm from "./EditProfileForm";
+
 function EditProfile() {
-  const handleClick = () => {
-    alert("button clicked!");
-  };
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const openForm = () => setIsFormOpen(true);
+  const closeForm = () => setIsFormOpen(false);
 
   return (
-    <button className="btn-edit-profile" onClick={handleClick}>
-      Edit Profile
-    </button>
+    <>
+      <button className="btn-edit-profile" onClick={openForm}>
+        Edit Profile
+      </button>
+
+      {/* Form Popup */}
+      {isFormOpen && (
+        <div className="form-overlay">
+          <div className="form-content">
+            <EditProfileForm onClose={closeForm} />
+          </div>
+        </div>
+      )}
+    </>
   );
-  {
-    /* User's Streak */
-  }
-  <div className="streak-section mb-3">
-    <p>
-      <MdOutlineLocalFireDepartment /> {user.loginStreak}
-    </p>
-  </div>;
 }
 
 export default EditProfile;
