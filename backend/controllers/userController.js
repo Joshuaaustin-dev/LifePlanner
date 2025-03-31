@@ -78,6 +78,7 @@ export const login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
+    
     // Set HTTP-only cookie
     res.cookie("access_token", token, {
       httpOnly: true,

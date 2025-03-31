@@ -1,16 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import useUser from "../Hooks/userUser";
 import ProfileHead from "./ProfileHead";
 import ProfileBody from "./ProfileBody";
 import "./Profile.css";
 
 const Profile = () => {
-  const [user, setUser] = useState({});
+  const { user } = useUser();
   const [userStore, setUserStore] = useState(null);
-
-  useEffect(() => {
-    setUserStore(JSON.parse(localStorage.getItem("user")));
-  }, []);
 
   useEffect(() => {
     if (userStore) {

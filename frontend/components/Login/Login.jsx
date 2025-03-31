@@ -32,6 +32,7 @@ function Login({ setIsAuthenticated }) {
         navigate("/Home"); // Redirect after login
       }
     } catch (err) {
+      console.error("LOGIN ERROR " + err.response);
       setError(err.response?.data?.message || "Login failed");
     }
   };
