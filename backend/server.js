@@ -1,3 +1,4 @@
+
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -11,10 +12,12 @@ import cookieParser from "cookie-parser";
 import calendarRoutes from "./routes/calendarRoutes.js";
 import dummyRoutes from "./routes/dummyRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import shopRoutes from "./routes/shopRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+import coinRoutes from "./routes/coinRoutes.js";
 
 config();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
 const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -34,7 +37,9 @@ app.use(express.json());
 app.use("/calendar-api", calendarRoutes);
 app.use("/", dummyRoutes);
 app.use("/", userRoutes);
-app.use("/", shopRoutes);
+app.use("/", paymentRoutes);
+app.use("/", coinRoutes);
+
 
 // MongoDB connection string - Update this based on your cluster
 const mongoURI = process.env.DB_URI;
@@ -109,15 +114,13 @@ app.patch("/update-goal/:id", async (req, res) => {
   }
 });
 
+
+
 // Connect to MongoDB
 mongoose
-  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log("MongoDB connected");
-  })
-  .catch((err) => {
-    console.error("MongoDB connection error:", err);
-  });
+  .connect(mongoURI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 // Start the server
 const port = process.env.PORT || 5000;

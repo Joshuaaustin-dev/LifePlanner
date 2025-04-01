@@ -2,7 +2,9 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import { config } from "dotenv";
 
+config();
 export const checkAuth = async (req, res) => {
   const token = req.cookies.access_token;
   if (token === undefined || token === null) {

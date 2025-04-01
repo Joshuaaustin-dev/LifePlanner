@@ -15,7 +15,6 @@ import Login from "./components/Login/Login";
 import Logout from "./components/Login/Logout";
 import CreateNewUser from "./components/Login/CreateNewUser";
 import ResetPassword from "./components/Login/ResetPassword";
-
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true); // New loading state

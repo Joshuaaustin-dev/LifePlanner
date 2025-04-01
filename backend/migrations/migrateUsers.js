@@ -5,7 +5,7 @@ import path from "path";
 
 
 config({path: path.resolve("../.env")});
-console.log("DB_URI:", process.env.DB_URI); // Debugging step
+console.log("DB_URI:", process.env.DB_URI); 
 
 const migrateUsers = async () => {
     const mongoURI = process.env.DB_URI;
@@ -31,7 +31,7 @@ const migrateUsers = async () => {
                     achievements: [],
                     lastLogin: null,
                     loginStreak: 0,
-                    Tokens: 0,
+                    coins: 0,
                 },
             }
         );

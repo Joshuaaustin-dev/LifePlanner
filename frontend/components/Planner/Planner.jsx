@@ -10,14 +10,15 @@ const Planner = () => {
   const [plan, setPlan] = useState([]);
   const [timePeriod, setTimePeriod] = useState("2");
   const [goalSpeed, setGoalSpeed] = useState("1");
-  const { user } = useUser();
+  const { user, coins, setCoins } = useUser();
 
   const speedOptions = ["Slow", "Moderate", "Fast"];
 
   const HTTP = "http://localhost:5000/chat";
+  const today = new Date().toISOString().split("T")[0];
+
   const queryPlan = "Create a structured learning plan for the subject:";
   const queryTime = "The plan should span over";
-  const today = new Date().toISOString().split("T")[0];
   const queryStyle = `Make the name the subject, do not include json at the top or escape sequences.
                       Do not contain the day in content and keep it brief but with individual steps the user can take,
                       each subject should take an hour a day.
@@ -26,42 +27,46 @@ const Planner = () => {
                       make sure it is an objective doable goal in a day. 
                       Make sure the "name" is reduced to the subject name if it is too long.
                       Things should make logical sense, you don't buy a cake and then bake it the next day.`;
-
-  /* GPT has no clue what to do with this
-  const pace = `Plan it at a ${speedOptions[goalSpeed]} pace. By pace I mean increase how many more tasks to do in a day.
-                For example if I did slow I want to practice learning the board and playing 1 game.
-                If I did fast I want to play multiple games rather than 1`;
+  /*
+    GPT has difficulty understanding pace adjustments dynamically.
+    const pace = `Plan it at a ${speedOptions[goalSpeed]} pace. By pace I mean increase how many more tasks to do in a day.
+                  For example if I did slow I want to practice learning the board and playing 1 game.
+                  If I did fast I want to play multiple games rather than 1`;
   */
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     const combinePrompt = `${queryPlan} ${prompt}. ${queryTime} ${timePeriod} days. ${queryStyle}`;
+
+    if (coins < 10) {
+      setIsError(true);
+      setIsLoading(false);
+      return;
+    }
+
     axios
       .post(`${HTTP}`, { prompt: combinePrompt })
       .then((res) => {
         axios
           .post("http://localhost:5000/add-skill", {
             email: user.email,
-            skill: res.data,
+            skill: res.data, 
           })
           .then((response) => {
             const skill = response.data;
 
             axios
-              .post("http://localhost:5000/update-tokens", {
+              .post("http://localhost:5000/deduct-coins", {
                 email: user.email,
-                tokens: user.tokens - 10,
               })
-              .then((tokenResponse) => {
-                setUser((prevUser) => ({
-                  ...prevUser,
-                  tokens: prevUser.tokens - 10,
-                }));
+              .then((coinResponse) => {
+                setCoins(coinResponse.data.coins); 
               })
-              .catch((error) => console.error("Error updating tokens:", error));
+              .catch((error) => console.error("Error updating coins:", error));
 
-            setPlan(skill.day);
+            setPlan(Array.isArray(skill.day) ? skill.day : []);
             setIsError(false);
             setIsLoading(false);
           })
@@ -83,6 +88,8 @@ const Planner = () => {
     <div className="Planner responsive">
       <div className="card">
         <h1>Generate a new plan!</h1>
+        <h3>Current amount of coins: {coins}</h3>
+
         <textarea
           className="textbox"
           rows="4"
@@ -91,9 +98,9 @@ const Planner = () => {
           onChange={(e) => setPrompt(e.target.value)}
         />
         <p className="ms-1">
-          Tip: Being more <b>specific</b> will create more detailed plan. (e.g.,
-          Chess vs Chess Openings)
+          Tip: Being more <b>specific</b> will create a more detailed plan. (e.g., Chess vs Chess Openings)
         </p>
+
         <div className="slider-container">
           <label htmlFor="days-range" className="slider-label">
             Plan Duration: {timePeriod} {timePeriod === 1 ? "day" : "days"}
@@ -116,14 +123,16 @@ const Planner = () => {
         >
           Send to AI
         </button>
+
         {isError && (
           <p className="text-center text-danger">
-            You have maxed out your skill limit!
+            Not enough coins to generate a plan!
           </p>
         )}
       </div>
 
       {isLoading && <p>Loading ...</p>}
+
       {plan.length > 0 && !isLoading && (
         <section className="planSection">
           <div className="p-2 bg-white-100 mt-1">

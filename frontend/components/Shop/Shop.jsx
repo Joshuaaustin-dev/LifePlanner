@@ -1,38 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import useUser from "../Hooks/userUser";
 import Ticket from "./Ticket";
 import shopStyles from "./Shop.module.css";
 
 const Shop = () => {
-  const { user, tokens, setTokens, error } = useUser();
+  const { user, coins, setCoins } = useUser();
   const [loading, setLoading] = useState(false);
-  const [purchaseError, setPurchaseError] = useState(null);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  const buyToken = async (amount) => {
-    if (!user?._id) {
-      setPurchaseError("User ID not found. Please refresh and try again.");
-      return;
+  useEffect(() => {
+    const sessionId = searchParams.get("session_id");
+    if (sessionId) {
+      confirmPayment(sessionId);
     }
+  }, [searchParams]);
 
-    setLoading(true);
-    setPurchaseError(null);
-
+  const confirmPayment = async (sessionId) => {
     try {
-      const response = await fetch("http://localhost:5000/buy-ticket", {
+      const response = await fetch("http://localhost:5000/confirm-payment", {
         method: "POST",
-        credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user._id, amount }),
+        body: JSON.stringify({ sessionId }),
       });
 
       const data = await response.json();
       if (response.ok) {
-        setTokens(data.tokens);
-      } else {
-        setPurchaseError(data.message || "Failed to buy tokens.");
+        setCoins(data.coins);
       }
-    } catch (err) {
-      setPurchaseError("Error buying tokens. Please try again later.");
+    } finally {
+      setTimeout(() => {
+        navigate("/Shop", { replace: true });
+      }, 500);
+    }
+  };
+
+  const buyCoin = async (value) => {
+    if (!user?.email) return;
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:5000/create-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ value, email: user.email }),
+      });
+
+      const data = await response.json();
+      if (response.ok && data.url) {
+        window.location.href = data.url;
+      }
     } finally {
       setLoading(false);
     }
@@ -42,19 +61,18 @@ const Shop = () => {
     <div>
       <header className={shopStyles.shopContainer}>
         <h1>Shop</h1>
+        {user && <p className={shopStyles.coinDisplay}>Coins: {coins}</p>}
       </header>
-
-      <div className={shopStyles.currentTokens}>Current Tokens: {tokens}</div>
 
       <div className={shopStyles.ticketsContainer}>
         <div className={shopStyles.ticketDiv}>
-          <Ticket value={10} onPurchase={buyToken} disabled={loading} />
+          <Ticket value={10} onPurchase={buyCoin} disabled={loading} />
         </div>
         <div className={shopStyles.ticketDiv}>
-          <Ticket value={50} onPurchase={buyToken} disabled={loading} />
+          <Ticket value={50} onPurchase={buyCoin} disabled={loading} />
         </div>
         <div className={shopStyles.ticketDiv}>
-          <Ticket value={100} onPurchase={buyToken} disabled={loading} />
+          <Ticket value={100} onPurchase={buyCoin} disabled={loading} />
         </div>
       </div>
     </div>

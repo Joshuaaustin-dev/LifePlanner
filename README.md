@@ -19,11 +19,15 @@ Currently, two official plugins are available:
     npm install recharts
     npm install react-icons
 
+
 # BACKEND
     npm install mongodb
     npm install axios openai
     npm install bcrypt
     npm install cors
+    npm install @stripe/react-stripe-js @stripe/stripe-js
+    npm install stripe
+    
 
 # Create an Env File for API KEY
     OPENAI_API_KEY=API_KEY

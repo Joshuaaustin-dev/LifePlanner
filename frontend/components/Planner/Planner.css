@@ -19,6 +19,14 @@
   font-family: inherit;
   font-weight: inherit;
 }
+.Planner h3 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-family: inherit;
+  font-weight: inherit;
+}
+
 
 .planSection {
   width: 50vw;
