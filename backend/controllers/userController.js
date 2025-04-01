@@ -148,15 +148,12 @@ export const resetPassword = async (req, res) => {
         return console.log(error);
       }
     });
-
-    /*
     // Update password hash before saving
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
 
     user.password = hashedPassword;
     await user.save();
-    */
     res.status(200).json({ message: "Password updated successfully." });
   } catch (err) {
     console.error("Error resetting password:", err);
