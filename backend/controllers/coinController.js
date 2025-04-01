@@ -18,7 +18,7 @@ export const deductCoins = async (req, res) => {
       return res.status(400).json({ error: "Not enough coins to create a plan" });
     }
 
-    user.coins -= 10;
+    user.coins -= 100;
     await user.save();
 
     res.json({ message: "Coins deducted successfully", coins: user.coins });

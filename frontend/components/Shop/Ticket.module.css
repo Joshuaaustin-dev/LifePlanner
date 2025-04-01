@@ -1,31 +1,63 @@
 .ticketButton {
-    background: linear-gradient(135deg, #ffffff, #f9f9f9);
-    color: #2e3a59;
-    font-size: 2rem;
-    font-weight: bold;
-    padding: 1.5rem 2.5rem;
-    border-radius: 15px;
-    border: 2px solid #2e3a59;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    width: 500px;
-    height: 400px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
+    background-color: #f8f9fa;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    width: 250px; 
+    height: 300px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
   
 .ticketButton:hover {
-    background: linear-gradient(135deg, #f0f0f0, #ffffff);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
 }
-
-.ticketButton:active {
-    background: linear-gradient(135deg, #ffffff, #f9f9f9);
-    transform: translateY(0);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  
+.ticketImage {
+    width: 90px;
+    height: auto;
+    margin-bottom: 10px;
 }
-
+  
+.ticketText { 
+    margin: 5px 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+  
+.ticketPrice {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+} 
+  
+.ticketButton button {
+    background-color: #f4651d;
+    color: white;
+    font-size: 16px; 
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px; 
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+  
+.ticketButton button:hover {
+    background-color: #fb8245;
+    transform: scale(1.05);
+}
+  
+.ticketButton button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+} 
+  

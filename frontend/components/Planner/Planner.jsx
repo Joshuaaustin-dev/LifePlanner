@@ -40,7 +40,7 @@ const Planner = () => {
 
     const combinePrompt = `${queryPlan} ${prompt}. ${queryTime} ${timePeriod} days. ${queryStyle}`;
 
-    if (coins < 10) {
+    if (coins < 100) {
       setIsError(true);
       setIsLoading(false);
       return;

@@ -3,6 +3,9 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import useUser from "../Hooks/userUser";
 import Ticket from "./Ticket";
 import shopStyles from "./Shop.module.css";
+import smallpile from "../../assets/shop/smallpile.png";
+import mediumpile from "../../assets/shop/mediumpile.png";
+import largepile from "../../assets/shop/largepile.png";
 
 const Shop = () => {
   const { user, coins, setCoins } = useUser();
@@ -62,17 +65,17 @@ const Shop = () => {
       <header className={shopStyles.shopContainer}>
         <h1>Shop</h1>
         {user && <p className={shopStyles.coinDisplay}>Coins: {coins}</p>}
-      </header>
 
+      </header>
       <div className={shopStyles.ticketsContainer}>
         <div className={shopStyles.ticketDiv}>
-          <Ticket value={10} onPurchase={buyCoin} disabled={loading} />
+          <Ticket value={500} onPurchase={buyCoin} disabled={loading} image={smallpile} />
         </div>
         <div className={shopStyles.ticketDiv}>
-          <Ticket value={50} onPurchase={buyCoin} disabled={loading} />
+          <Ticket value={1000} onPurchase={buyCoin} disabled={loading} image={mediumpile}/>
         </div>
         <div className={shopStyles.ticketDiv}>
-          <Ticket value={100} onPurchase={buyCoin} disabled={loading} />
+          <Ticket value={1500} onPurchase={buyCoin} disabled={loading} image={largepile}/>
         </div>
       </div>
     </div>

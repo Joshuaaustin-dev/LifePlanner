@@ -33,7 +33,7 @@ export const session = async (req, res) => {
           price_data: {
             currency: "usd",
             product_data: { name: `${value} Coins` },
-            unit_amount: value * 100,
+            unit_amount: value,
           },
           quantity: 1,
         },
