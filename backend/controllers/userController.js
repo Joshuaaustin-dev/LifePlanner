@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 
 export const checkAuth = async (req, res) => {
   const token = req.cookies.access_token;
@@ -118,7 +119,6 @@ export const logout = async (req, res) => {
 //Reset Password method
 export const resetPassword = async (req, res) => {
   const { email, newPassword } = req.body;
-
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -127,13 +127,34 @@ export const resetPassword = async (req, res) => {
         .json({ message: "User not found. Please try again." });
     }
 
+    // Looking to send emails in production? Check out our Email API/SMTP product!
+    var transport = nodemailer.createTransport({
+      host: "sandbox.smtp.mailtrap.io",
+      port: 2525,
+      auth: {
+        user: "163d6b4b3ccd93",
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      from: '"Mailtrap Test" <hello@example.com>',
+      to: email,
+      subject: "Password Reset",
+      text: "Password reset test",
+    };
+
+    transport.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+    });
     // Update password hash before saving
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
 
     user.password = hashedPassword;
     await user.save();
-
     res.status(200).json({ message: "Password updated successfully." });
   } catch (err) {
     console.error("Error resetting password:", err);
