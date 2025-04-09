@@ -6,7 +6,7 @@ import ProfileBody from "./ProfileBody";
 import "./Profile.css";
 
 const Profile = () => {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const [userStore, setUserStore] = useState(null);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const Profile = () => {
     <div className="profile-container">
       {user ? (
         <>
-          <ProfileHead user={user} />
+          <ProfileHead user={user} setUser={setUser} />
           <ProfileBody skills={user.skills} achievements={user.achievements} />
         </>
       ) : (

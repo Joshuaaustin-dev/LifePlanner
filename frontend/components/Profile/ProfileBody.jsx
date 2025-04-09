@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { BsClipboard2Data } from "react-icons/bs";
-import { BsClipboard2Check } from "react-icons/bs";
+import { useState, useRef, useEffect } from "react";
+import { BsClipboard2Data, BsClipboard2Check } from "react-icons/bs";
 import { GrAchievement } from "react-icons/gr";
 import "./ProfileBody.css";
 
@@ -14,6 +13,29 @@ const ProfileBody = ({ skills = [], achievements = [] }) => {
 
   // Manage active section
   const [activeSection, setActiveSection] = useState("skillsInProgress");
+
+  // Refs for positioning
+  const tabRefs = {
+    skillsInProgress: useRef(null),
+    skillsCompleted: useRef(null),
+    achievements: useRef(null),
+  };
+
+  const [indicatorStyle, setIndicatorStyle] = useState({
+    left: "0px",
+    width: "0px",
+  });
+
+  // Update indicator position on state change
+  useEffect(() => {
+    if (tabRefs[activeSection]?.current) {
+      const tab = tabRefs[activeSection].current;
+      setIndicatorStyle({
+        left: `${tab.offsetLeft}px`,
+        width: `${tab.offsetWidth}px`,
+      });
+    }
+  }, [activeSection]);
 
   const Skills = ({ skills }) => {
     return (
@@ -61,10 +83,14 @@ const ProfileBody = ({ skills = [], achievements = [] }) => {
   return (
     <div className="profile-body container m-5">
       {/* Row with three columns for counts */}
-      <div className="row m-4">
-        {/* Skills In Progress Header section */}
+      <div className="row m-4 position-relative">
+        {/* Indicator Bar */}
+        <div className="tab-indicator" style={indicatorStyle}></div>
+
+        {/* Skills In Progress tab */}
         <div
-          className={`col-12 col-md-4 d-flex align-items-center ${
+          ref={tabRefs.skillsInProgress}
+          className={`title-box col-12 col-md-4 d-flex align-items-center ${
             activeSection === "skillsInProgress" ? "active" : ""
           }`}
           onClick={() => setActiveSection("skillsInProgress")}
@@ -76,9 +102,10 @@ const ProfileBody = ({ skills = [], achievements = [] }) => {
           </div>
         </div>
 
-        {/* Skills Completed Header section */}
+        {/* Skills Completed tab */}
         <div
-          className={`col-12 col-md-4 d-flex align-items-center ${
+          ref={tabRefs.skillsCompleted}
+          className={`title-box col-12 col-md-4 d-flex align-items-center ${
             activeSection === "skillsCompleted" ? "active" : ""
           }`}
           onClick={() => setActiveSection("skillsCompleted")}
@@ -90,9 +117,10 @@ const ProfileBody = ({ skills = [], achievements = [] }) => {
           </div>
         </div>
 
-        {/* Achievements Header Section */}
+        {/* Achievements Header tab */}
         <div
-          className={`col-12 col-md-4 d-flex align-items-center ${
+          ref={tabRefs.achievements}
+          className={`title-box col-12 col-md-4 d-flex align-items-center ${
             activeSection === "achievements" ? "active" : ""
           }`}
           onClick={() => setActiveSection("achievements")}

@@ -1,23 +1,24 @@
 .active {
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .active::after {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  border-bottom: 3px solid #f4651d;
-  transition: left 0.3s ease, width 0.3s ease;
+  transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .count-box {
   position: relative;
   margin-bottom: 20px;
   margin-right: 20px;
+}
+
+.title-box {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
 .count-box h5 {
@@ -51,4 +52,16 @@
 
 .row.mb-4 {
   margin-bottom: 30px;
+}
+
+/*styling for tab-indicator*/
+.tab-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 4px;
+  background-color: #f4651d;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }

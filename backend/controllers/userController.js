@@ -151,6 +151,7 @@ export const resetPassword = async (req, res) => {
         return console.log(error);
       }
     });
+
     // Update password hash before saving
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
@@ -161,5 +162,31 @@ export const resetPassword = async (req, res) => {
   } catch (err) {
     console.error("Error resetting password:", err);
     res.status(500).json({ message: "Error resetting password." });
+  }
+};
+
+//updateUser Controller Method
+export const updateProfile = async (req, res) => {
+  const { email, newName, newLocation, newBio } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found. Please try again." });
+    }
+
+    user.name = newName;
+    user.location = newLocation;
+    user.bio = newBio;
+
+    await user.save();
+    res.status(200).json({ message: "Profile updated successfully." });
+    
+
+  } catch (err) {
+    console.error("Error updating user:", err);
+    res.status(500).json({ message: "Error updating user information" });
   }
 };

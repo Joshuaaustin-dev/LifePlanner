@@ -8,22 +8,18 @@ const useUser = () => {
 
   useEffect(() => {
     axios
-      .post(
-        "http://localhost:5000/get-user",
-        {},
-        { withCredentials: true }
-      )
+      .post("http://localhost:5000/get-user", {}, { withCredentials: true })
       .then((response) => {
         // Set user data
         setUser(response.data);
-        setCoins(response.data.coins || 0); 
+        setCoins(response.data.coins || 0);
       })
       .catch((error) => {
         console.error("Error fetching user:", error);
       });
   }, []);
 
-  return { user, coins, setCoins, error };
+  return { user, setUser, coins, setCoins, error };
 };
 
 export default useUser;
