@@ -167,7 +167,7 @@ export const resetPassword = async (req, res) => {
 
 //updateUser Controller Method
 export const updateProfile = async (req, res) => {
-  const { email, newName, newLocation, newBio } = req.body;
+  const { email, newName, newLocation, newBio, newProfilePicture  } = req.body;    
 
   try {
     const user = await User.findOne({ email });
@@ -180,10 +180,11 @@ export const updateProfile = async (req, res) => {
     user.name = newName;
     user.location = newLocation;
     user.bio = newBio;
+    user.profilePicture = newProfilePicture;
+    
 
     await user.save();
     res.status(200).json({ message: "Profile updated successfully." });
-    
 
   } catch (err) {
     console.error("Error updating user:", err);

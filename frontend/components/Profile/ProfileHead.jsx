@@ -1,5 +1,5 @@
 import { useState } from "react";
-import profileImage from "../../assets/images/profilePlaceholder.jpg";
+import profileImagePlaceholder from "../../assets/images/profilePlaceholder.jpg";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdLocalFireDepartment } from "react-icons/md";
 import { FaCalendarAlt } from "react-icons/fa";
@@ -15,7 +15,7 @@ const ProfileHead = ({ user, setUser }) => {
         <div className="col-12 col-md-4 text-center">
           <div className="profile-picture position-relative mb-3 d-inline-block">
             <img
-              src={profileImage}
+              src={user.profilePicture || profileImagePlaceholder}
               alt="Profile Image"
               className="img-fluid rounded-circle profile-image shadow"
             />

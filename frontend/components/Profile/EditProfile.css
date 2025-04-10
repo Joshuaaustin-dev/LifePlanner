@@ -3,10 +3,10 @@
   background: #f4651d;
   color: white;
   border: none;
-  padding: 5px 10px;
+  padding: 8px 16px;
   border-radius: 5px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-edit-profile:hover {
@@ -30,14 +30,17 @@
 
 /* Form Styling*/
 .edit-profile-form {
-  background: white;
-  padding: 20px;
+  background: #e5edf3;
+  padding: 30px;
   border-radius: 10px;
   width: 90%;
-  max-width: 400px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 450px;
+  max-height: 100vh;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
   position: relative;
+  overflow-y: auto;
+  padding-bottom: 20px;
 }
 
 /* Profile Form styling */
@@ -46,33 +49,91 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 15px;
+  gap: 10px;
+}
+
+/* Style for file input */
+input[type="file"] {
+  display: none; /* Hide default file input */
+}
+
+.profile-image-section .file-upload-label {
+  display: inline-block;
+  background: #f4651d;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.profile-image-section .file-upload-label:hover {
+  background: #bd4e16;
+}
+
+/* Buttons for delete and file input */
+.profile-image-section .button-group {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Full width of the section */
+  gap: 10px; /* Space between buttons */
+}
+
+.btn-delete-picture {
+  background: #f4651d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-delete-picture:hover {
+  background: #bd4e16;
 }
 
 .profile-image-preview {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
   border-radius: 50%;
   border: 3px solid #f4651d;
   margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
 }
 
-/* Form Styling */
+.profile-image-preview:hover {
+  transform: scale(1.05);
+}
+
+/* Content Styling */
 label {
   font-weight: bold;
   display: block;
-  margin-top: 10px;
+  margin-top: 15px;
   text-align: left;
+  color: #333;
 }
 
 input,
 textarea {
   width: 100%;
-  padding: 8px;
+  padding: 12px;
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+  transition: border 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #f4651d;
+  outline: none;
 }
 
 /* Buttons Styling */
@@ -95,20 +156,6 @@ textarea {
 
 .btn-close:hover {
   transform: scale(1.2);
-}
-
-.btn-preview-image {
-  background: #f4651d;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.btn-preview-image:hover {
-  background: #bd4e16;
 }
 
 .buttons {
@@ -144,11 +191,24 @@ textarea {
   background: #bd4e16;
 }
 
+/* Success and Error Messages */
+.success-msg,
+.error-msg {
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  text-align: center;
+}
+
 .success-msg {
   background-color: #d4edda;
   color: #155724;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
   border: 1px solid #c3e6cb;
+}
+
+.error-msg {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }
