@@ -139,13 +139,13 @@ const Planner = () => {
     setSelectedDay(updatedDays);
   };
 
-  const editSkill = (e, selected) => {
+  const editDay = (e, selected) => {
     e.preventDefault();
     setEditID(selected);
     setEditValue(selectedDay[selected].content);
   };
 
-  const deleteSkill = (e, selected) => {
+  const deleteDay = (e, selected) => {
     e.preventDefault();
     const id = selectedDay[selected]._id;
     setSelectedDay((prevDays) => prevDays.filter((day) => day._id !== id));
@@ -161,6 +161,34 @@ const Planner = () => {
       .catch((error) => {
         console.error("Could not delete:", error);
       });
+  };
+
+  const deleteSkill = (e) => {
+    e.preventDefault();
+    const id = selectedSkill._id;
+    if (id === undefined) return;
+    axios
+      .post(
+        "http://localhost:5000/skills-api/delete-skill",
+        { user: user, skillID: id },
+        {
+          withCredentials: true,
+        }
+      )
+      .catch((error) => {
+        console.error("Could not delete:", error);
+      });
+    setUserSkills((prevSkills) => {
+      const newSkills = prevSkills.filter((skill) => skill._id !== id);
+
+      const newSelected =
+        newSkills.length > 0 ? newSkills[newSkills.length - 1] : null;
+
+      setSelectedSkills(newSelected);
+      setSelectedDay(newSelected?.day || null);
+
+      return newSkills;
+    });
   };
 
   return (
@@ -223,7 +251,13 @@ const Planner = () => {
 
           <section className="planSection">
             <div className="bg-white-100 mt-1">
-              <h2 className="text-center mb-4">Learning Plan</h2>
+              <div className="learningPlanHeader">
+                <button className="btn btn-danger" onClick={deleteSkill}>
+                  Delete Skill
+                </button>
+                <h2 className="text-center mb-4">Learning Plan</h2>
+              </div>
+
               <hr className="border-bottom border-1 " />
               {isLoading && (
                 <div className="loading">
@@ -263,13 +297,13 @@ const Planner = () => {
                         <h5>
                           {date}
                           <span
-                            onClick={(e) => deleteSkill(e, i)}
+                            onClick={(e) => deleteDay(e, i)}
                             className="material-icons icon"
                           >
                             delete
                           </span>{" "}
                           <span
-                            onClick={(e) => editSkill(e, i)}
+                            onClick={(e) => editDay(e, i)}
                             className="material-icons icon"
                           >
                             edit

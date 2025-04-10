@@ -46,3 +46,23 @@ export const deleteDay = async (req, res) => {
     res.status(500).send("Could not delete day");
   }
 };
+
+export const deleteSkill = async (req, res) => {
+  try {
+    const { user, skillID } = req.body;
+
+    const result = await User.updateOne(
+      { email: user.email },
+      { $pull: { skills: { _id: skillID } } }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).send("Skill not found");
+    }
+
+    res.status(200).send("Skill deleted.");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Could not delete Skill");
+  }
+};
