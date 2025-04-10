@@ -5,8 +5,13 @@ import "./ProfileBody.css";
 
 const ProfileBody = ({ skills = [], achievements = [] }) => {
   // Skills in progress and completed count
-  const skillsInProgress = skills.filter((skill) => !skill.completed).length;
-  const skillsCompleted = skills.filter((skill) => skill.completed).length;
+  const skillsInProgress = skills.filter((skill) =>
+    skill.day.some((day) => day.completed === false)
+  );
+
+  const skillsCompleted = skills.filter((skill) =>
+    skill.day.every((day) => day.completed === true)
+  );
 
   // Achievements count
   const achievementsCount = achievements.length;
@@ -42,8 +47,10 @@ const ProfileBody = ({ skills = [], achievements = [] }) => {
       <div className="skills">
         <h3>Skills In Progress</h3>
         <ul>
-          {skills && skills.length > 0 ? (
-            skills.map((skill, index) => <li key={index}>{skill.name}</li>)
+          {skillsInProgress.length > 0 ? (
+            skillsInProgress.map((skill, index) => (
+              <li key={index}>{skill.name}</li>
+            ))
           ) : (
             <p>No skills added yet.</p>
           )}
@@ -53,11 +60,21 @@ const ProfileBody = ({ skills = [], achievements = [] }) => {
   };
 
   const SkillsCompleted = ({ skills }) => {
+    const completedSkills = skills.filter((skill) =>
+      skill.day.every((day) => day.completed === true)
+    );
+
     return (
       <div className="skills">
         <h3>Skills Completed</h3>
         <ul>
-          <p>No skills added yet.</p>
+          {completedSkills.length > 0 ? (
+            completedSkills.map((skill, index) => (
+              <li key={index}>{skill.name}</li>
+            ))
+          ) : (
+            <p>No skills completed yet.</p>
+          )}
         </ul>
       </div>
     );
@@ -98,7 +115,7 @@ const ProfileBody = ({ skills = [], achievements = [] }) => {
           <BsClipboard2Data size={60} className="me-4" />
           <div className="count-box">
             <h5>Skills In Progress</h5>
-            <p>{skillsInProgress}</p>
+            <p>{skillsInProgress.length}</p>
           </div>
         </div>
 
@@ -113,7 +130,7 @@ const ProfileBody = ({ skills = [], achievements = [] }) => {
           <BsClipboard2Check size={60} className="me-4" />
           <div className="count-box">
             <h5>Skills Completed</h5>
-            <p>{skillsCompleted}</p>
+            <p>{skillsCompleted.length}</p>{" "}
           </div>
         </div>
 
