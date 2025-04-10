@@ -1,44 +1,58 @@
+/* Active tab styling */
 .active {
   position: relative;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
 }
 
-.active::after {
-  content: "";
+/* Indicator bar animation */
+.tab-indicator {
   position: absolute;
-  transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-    width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  bottom: 0;
+  height: 4px;
+  background-color: #f4651d;
+  border-radius: 4px;
+  transition: left 0.3s ease, width 0.3s ease;
 }
 
-.count-box {
-  position: relative;
-  margin-bottom: 20px;
-  margin-right: 20px;
-}
-
+/* General layout for title-box (tabs) */
 .title-box {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s ease;
   cursor: pointer;
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
 }
 
+.title-box:hover {
+  background-color: #f8f9fa;
+}
+
+/* Count box styling inside tab */
 .count-box h5 {
-  margin-bottom: 10px;
-  font-weight: bold;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
 }
 
 .count-box p {
-  font-size: 24px;
+  font-size: 1.25rem;
   font-weight: bold;
-  color: #333;
-  margin: 0;
-  padding-top: 5px;
+  color: #f4651d;
+  margin: 5px 0 0;
 }
 
+/* Section layout */
 .skills,
 .achievements {
   margin-top: 20px;
 }
 
+/* List styling */
 .skills ul,
 .achievements ul {
   list-style: none;
@@ -47,21 +61,75 @@
 
 .skills li,
 .achievements li {
-  margin: 5px 0;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  color: #fff;
 }
 
-.row.mb-4 {
-  margin-bottom: 30px;
+.skills li:hover,
+.achievements li:hover {
+  background-color: #f8f9fa;
 }
 
-/*styling for tab-indicator*/
-.tab-indicator {
-  position: absolute;
-  bottom: 0;
-  height: 4px;
-  background-color: #f4651d;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  transition: left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-    width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+/* Achievement card styling */
+.card {
+  border-radius: 15px;
+  border: none;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background-color: #f8f9fa;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-body {
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.card .card-text {
+  color: #555;
+  font-size: 0.95rem;
+  margin-top: 8px;
+}
+
+.card .text-primary {
+  color: #f4651d;
+}
+
+/* Container spacing */
+.profile-body.container {
+  max-width: 80%;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive spacing */
+@media (max-width: 768px) {
+  .title-box {
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .count-box h5 {
+    font-size: 1rem;
+  }
+
+  .count-box p {
+    font-size: 1.1rem;
+  }
 }

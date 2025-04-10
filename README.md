@@ -18,7 +18,7 @@ Currently, two official plugins are available:
     npm install axios
     npm install recharts
     npm install react-icons
-
+    npm install canvas-confetti
 
 # BACKEND
     npm install mongodb
