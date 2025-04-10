@@ -1,9 +1,9 @@
 import { useState } from "react";
-import profileImagePlaceholder from "../../assets/images/profilePlaceholder.jpg";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdLocalFireDepartment } from "react-icons/md";
 import { FaCalendarAlt } from "react-icons/fa";
 import EditProfile from "./EditProfile";
+import profileImagePlaceholder from "../../assets/images/profilePlaceholder.jpg";
 
 const ProfileHead = ({ user, setUser }) => {
   const [showEditProfile, setShowEditProfile] = useState(false);

@@ -27,6 +27,7 @@ Currently, two official plugins are available:
     npm install cors
     npm install @stripe/react-stripe-js @stripe/stripe-js
     npm install stripe
+    npm install moment
     
 
 # Create an Env File for API KEY
