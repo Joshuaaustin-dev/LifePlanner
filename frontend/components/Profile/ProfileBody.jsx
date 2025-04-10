@@ -76,7 +76,6 @@ const ProfileBody = ({ skills = [], achievements = [] }) => {
   const Skills = ({ skills }) => {
     return (
       <div className="skills">
-        <h3>Skills In Progress</h3>
         <ul>
           {skillsInProgress.length > 0 ? (
             skillsInProgress.map((skill, index) => (
@@ -101,7 +100,6 @@ const ProfileBody = ({ skills = [], achievements = [] }) => {
 
     return (
       <div className="skills">
-        <h3>Skills Completed</h3>
         <ul>
           {completedSkills.length > 0 ? (
             completedSkills.map((skill, index) => (

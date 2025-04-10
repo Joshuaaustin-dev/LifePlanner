@@ -53,14 +53,15 @@
 }
 
 /* List styling */
-.skills ul,
-.achievements ul {
+.skills ul {
   list-style: none;
   padding: 0;
+  display: flex; /* Use flexbox to arrange items horizontally */
+  flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+  gap: 15px; /* Add space between items */
 }
 
-.skills li,
-.achievements li {
+.skills li {
   padding: 10px 15px;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -68,8 +69,7 @@
   color: #fff;
 }
 
-.skills li:hover,
-.achievements li:hover {
+.skills li:hover {
   background-color: #f8f9fa;
 }
 
@@ -123,6 +123,10 @@
     justify-content: center;
     text-align: center;
     flex-direction: column;
+  }
+
+  .skills li {
+    flex: 1 1 calc(50% - 15px);
   }
 
   .count-box h5 {
