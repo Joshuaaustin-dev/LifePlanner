@@ -170,7 +170,7 @@ export const resetPassword = async (req, res) => {
       host: "sandbox.smtp.mailtrap.io",
       port: 2525,
       auth: {
-        user: "163d6b4b3ccd93",
+        user: process.env.EMAIL_USER, //or (mine) 95ca2d554f7f0a //or (original) 163d6b4b3ccd93
         pass: process.env.EMAIL_PASS,
       },
     });
