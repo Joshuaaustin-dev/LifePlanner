@@ -6,6 +6,7 @@ import {
   login,
   register,
   resetPassword,
+  updateProfile
 } from "../controllers/userController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 const router = express.Router();
@@ -16,6 +17,7 @@ router.post("/logout", logout);
 router.post("/login", login);
 router.post("/register", register);
 router.post("/reset-password", resetPassword);
+router.post("/update-profile", updateProfile);
 
 // Protected Routes
 router.post("/get-user", authMiddleware, getUser);

@@ -18,7 +18,7 @@ Currently, two official plugins are available:
     npm install axios
     npm install recharts
     npm install react-icons
-
+    npm install canvas-confetti
 
 # BACKEND
     npm install mongodb
@@ -27,6 +27,7 @@ Currently, two official plugins are available:
     npm install cors
     npm install @stripe/react-stripe-js @stripe/stripe-js
     npm install stripe
+    npm install moment
     
 
 # Create an Env File for API KEY

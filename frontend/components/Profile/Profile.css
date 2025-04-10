@@ -1,4 +1,10 @@
 .profile-picture img {
-  max-width: 200px;
+  width: 180px;
+  height: 180px;
   object-fit: cover;
+}
+
+.streak-section {
+  color: #f4651d;
+  scale: 1.5;
 }

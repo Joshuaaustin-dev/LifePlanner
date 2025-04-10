@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import moment from "moment";
 import { config } from "dotenv";
 
 config();
@@ -70,10 +71,45 @@ export const login = async (req, res) => {
 
     //Checks if the password of the user matches compare the provided password with hashed password
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
       return res.status(400).send("Incorrect password");
     }
+
+    // Streak logic
+    const today = moment().startOf("day");
+    const lastLogin = user.lastLogin ? moment(user.lastLogin).startOf("day") : null;
+
+    console.log("Last Login:", lastLogin ? lastLogin.format() : "No previous login");
+    console.log("Today's Date:", today.format());
+
+    if (lastLogin) {
+      const diff = today.diff(lastLogin, "days");
+      console.log("Difference in days:", diff);
+      
+      if(diff === 1) {
+
+        //continue streak
+        user.loginStreak++;
+                console.log("Continuing streak, new streak:", user.loginStreak);
+
+      } else if (diff > 1) {
+
+        //reset streak for missed days
+        user.loginStreak = 1;
+                console.log("Streak reset due to missed days, new streak:", user.loginStreak);
+
+      } 
+    } else {
+
+      //first time logins set to 1
+      user.loginStreak = 1;
+            console.log("First time login, setting streak to 1");
+
+    }
+
+    //update to today when the user logs in
+    user.lastLogin = new Date(); 
+    await user.save();
 
     // Have ai generate a secure 32 byte JWT secret
     const token = jwt.sign(
@@ -151,6 +187,7 @@ export const resetPassword = async (req, res) => {
         return console.log(error);
       }
     });
+
     // Update password hash before saving
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
@@ -163,3 +200,31 @@ export const resetPassword = async (req, res) => {
     res.status(500).json({ message: "Error resetting password." });
   }
 };
+
+//updateUser Controller Method
+export const updateProfile = async (req, res) => {
+  const { email, newName, newLocation, newBio, newProfilePicture  } = req.body;    
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found. Please try again." });
+    }
+
+    user.name = newName;
+    user.location = newLocation;
+    user.bio = newBio;
+    user.profilePicture = newProfilePicture;
+    
+
+    await user.save();
+    res.status(200).json({ message: "Profile updated successfully." });
+
+  } catch (err) {
+    console.error("Error updating user:", err);
+    res.status(500).json({ message: "Error updating user information" });
+  }
+};
+

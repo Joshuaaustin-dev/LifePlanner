@@ -63,7 +63,7 @@ function ResetPassword() {
             </div>
           )}
 
-          {/*Form to hadnle password resetting*/}
+          {/*Form to handle password resetting*/}
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <input
