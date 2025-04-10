@@ -146,7 +146,7 @@ const ProfileBody = ({ skills = [], achievements = [] }) => {
 
   return (
     <div className="d-flex justify-content-center">
-      <div className="profile-body container m-5">
+      <div className="bg-white profile-body container m-5 mt-1">
         {/* Row with three columns for counts */}
         <div className="row m-4 position-relative">
           {/* Indicator Bar */}

@@ -1,121 +1,124 @@
 .dashboard-container {
-    background-color: #2e3a59; 
-    color: white;
-    padding: 1.5rem;
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin: 0 auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background-color: #2e3a59;
+  color: white;
+  padding: 1.5rem;
+  text-align: left;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0 auto;
 }
 
-html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #f4f7fb, #dfe8f0);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--primary-font);
+  background: linear-gradient(135deg, #f4f7fb, #dfe8f0);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 main {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 30px;
-    gap: 30px;
-    width: 90%;
-    box-sizing: border-box;
-    margin: 0 auto;
-    flex-grow: 1;
-    overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 30px;
+  gap: 30px;
+  width: 90%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 /* Column Layout */
 .column-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 65%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 65%;
 }
 
 /* Goals Section */
 .goals-container {
-    padding: 15px;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    overflow: hidden;
+  border: 1px rgb(185, 185, 185) solid;
+  padding: 15px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  overflow: hidden;
 }
 
 /* Horizontal Bar Chart */
 .horizontalBarChart {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #ffffff;
-    border-radius: 10px;
-    padding: 25px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    overflow: hidden;
+  border: 1px rgb(185, 185, 185) solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  overflow: hidden;
 }
 
 /* To-Do List Section */
 .todo-list-container {
-    width: 30%;
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-    overflow: hidden;
+  border: 1px rgb(185, 185, 185) solid;
+  width: 30%;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  overflow: hidden;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-    main {
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-    }
+  main {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
 
-    .column-container, 
-    .todo-list-container {
-        width: 90%;
-    }
+  .column-container,
+  .todo-list-container {
+    width: 90%;
+  }
 }
 
 @media (max-width: 768px) {
-    main {
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-    }
+  main {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
 
-    .column-container,
-    .todo-list-container {
-        width: 100%;
-    }
+  .column-container,
+  .todo-list-container {
+    width: 100%;
+  }
 }
 
 /* Animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .dashboard-container,
 .goals-container,
 .horizontalBarChart,
 .todo-list-container {
-    animation: fadeIn 0.4s ease-out;
+  animation: fadeIn 0.4s ease-out;
 }

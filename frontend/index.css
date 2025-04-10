@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
 :root {
   /* Fonts */
   --primary-font: "DM Sans", sans-serif !important;
@@ -16,4 +18,30 @@
   --color-dark: #222222;
   --color-detail-dark: #639fab;
   --color-detail-light: #bbcde5;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.loading > div {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid var(--color-accent);
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  animation: spin 1s linear infinite;
+  text-align: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

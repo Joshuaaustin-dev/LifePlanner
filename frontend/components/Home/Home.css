@@ -1,15 +1,15 @@
 /* Styles for Home Page */
 .home-main {
+  font-family: var(--primary-font);
   padding: 30px;
-  background: linear-gradient(135deg, #f4f7fb, #dfe8f0);
+  padding-top: 0;
   color: #333;
   border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .home-main h1 {
   font-size: 40px;
-  color: #2e3a59;
+  color: #ffffff;
   font-weight: 700;
   margin-bottom: 20px;
 }
@@ -21,8 +21,18 @@
   margin-bottom: 15px;
 }
 
+.headerBlock {
+  font-family: var(--primary-font);
+  background-color: #2e3a59;
+  color: white;
+  padding: 1.5rem;
+  margin: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
 /* Styling for the quote section */
 .quoteSection {
+  border: 1px solid rgb(185, 185, 185);
   background-color: #ffffff;
   padding: 20px;
   border-left: 5px solid #f4651d;
@@ -69,12 +79,12 @@
   font-weight: 500;
   color: #2e3a59;
   padding: 10px;
-  background-color: #f7f9fc;
+  background-color: hsl(0, 0%, 100%);
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
+  border: 1px solid rgb(185, 185, 185);
   border-left: 5px solid #f4651d;
-
 }
 
 .home-ul li h4:hover {
@@ -88,6 +98,7 @@
   padding: 5%;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgb(185, 185, 185);
   border-left: 5px solid #f4651d;
 
   margin-top: 30px;
@@ -127,6 +138,7 @@
 
 .home-main,
 .home-quoteSection,
-.home-tutorialSection {
-  animation: fadeIn 0.8s ease-out;
+.home-tutorialSection,
+.headerBlock {
+  animation: fadeIn 0.4s ease-out;
 }

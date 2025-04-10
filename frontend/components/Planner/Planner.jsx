@@ -198,7 +198,7 @@ const Planner = () => {
       </div>
       <div className="container">
         <div className="Planner responsive">
-          <div className="card">
+          <div className="planCard">
             <h1>Generate a new plan!</h1>
             {isLoading && (
               <div className="loading">
@@ -252,9 +252,11 @@ const Planner = () => {
           <section className="planSection">
             <div className="bg-white-100 mt-1">
               <div className="learningPlanHeader">
-                <button className="btn btn-danger" onClick={deleteSkill}>
-                  Delete Skill
-                </button>
+                {userSkills.length > 0 && !isLoading && (
+                  <button className="btn btn-danger" onClick={deleteSkill}>
+                    Delete Skill
+                  </button>
+                )}
                 <h2 className="text-center mb-4">Learning Plan</h2>
               </div>
 

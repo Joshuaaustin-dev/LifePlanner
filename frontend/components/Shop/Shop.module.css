@@ -1,44 +1,58 @@
-
 .ticketsContainer {
-    display: flex;
-    justify-content: center;
-    gap: 2rem; 
-    margin: 2rem 0;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0;
+  width: 100%;
 }
-  
+
 .ticketDiv {
-    flex: 1;
-    max-width: 500px;  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem; 
+  flex: 1;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 }
 .shopContainer {
-    background-color: #2e3a59; 
-    color: white;
-    padding: 1.5rem;
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin: 0 auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background-color: #2e3a59;
+  color: white;
+  padding: 1.5rem;
+  text-align: left;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 .currentTokens {
-    font-size: 1.8rem;
-    font-weight: 500;
-    color: #333;
-    background-color: #f4f7fb;
-    border-radius: 10px;
-    padding: 1rem 2rem;
-    margin: 1rem 0;
-    display: inline-block;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    height: auto;
-    margin: 2rem auto; 
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #333;
+  background-color: #f4f7fb;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  margin: 1rem 0;
+  display: inline-block;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: auto;
+  margin: 2rem auto;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
+
+.shopContainer,
+.ticketDiv {
+  animation: fadeIn 0.4s ease-out;
+}

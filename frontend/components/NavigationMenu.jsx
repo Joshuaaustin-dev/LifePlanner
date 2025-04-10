@@ -41,7 +41,7 @@ const NavigationMenu = () => {
             styles.navLinks
           }`}
         >
-          <Link to="/" className={styles.navLogo}>
+          <Link to="/Home" className={styles.navLogo}>
             <img src={logo} alt="Logo" className={styles.logo} />
           </Link>
           <Link to="/Dashboard" className={styles.navItem}>

@@ -14,7 +14,7 @@ const Calendar = () => {
   const [selectedSkill, setSelectedSkills] = useState();
   const [skillDay, setSkillDay] = useState([{}]);
   const [taskDay, setTaskDay] = useState([]);
-  const [isLoading, setIsLoading] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [scheduledTasks, setScheduledTasks] = useState(new Set());
 
@@ -153,63 +153,74 @@ const Calendar = () => {
   };
 
   return (
-    <div className="flex-container">
-      <div className="calendar">
-        <FullCalendar
-          plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-          initialView="timeGridWeek"
-          headerToolbar={{
-            left: "prev,next today",
-            center: "title",
-            right: "dayGridMonth,timeGridWeek",
-          }}
-          height="100vh"
-          timeZone="UTC"
-          events={skillDay}
-          editable={true}
-          droppable={true}
-          drop={handleEventDrop}
-          eventChange={handleEventChange}
-          eventClick={handleEventClick}
-          handleWindowResize={true}
-        ></FullCalendar>
+    <>
+      <div className="header ">
+        <h1>Calendar</h1>
       </div>
-      <div className="drag" ref={draggableRef}>
-        <div className="task-header">
-          <select
-            value={isLoading ? "loading" : JSON.stringify(selectedSkill)}
-            onChange={handleSelectChange}
-          >
-            {userSkills.map((skill, index) => (
-              <option key={index} value={JSON.stringify(skill)}>
-                {skill.name}
-              </option>
-            ))}
-          </select>
+      <div className="flex-container">
+        <div className="calendar">
+          <FullCalendar
+            plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
+            initialView="timeGridWeek"
+            headerToolbar={{
+              left: "prev,next today",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek",
+            }}
+            height="88vh"
+            timeZone="UTC"
+            events={skillDay}
+            editable={true}
+            droppable={true}
+            drop={handleEventDrop}
+            eventChange={handleEventChange}
+            eventClick={handleEventClick}
+            handleWindowResize={true}
+          ></FullCalendar>
         </div>
+        <div className="drag" ref={draggableRef}>
+          <div className="task-header">
+            <select
+              value={isLoading ? "loading" : JSON.stringify(selectedSkill)}
+              onChange={handleSelectChange}
+            >
+              {userSkills.map((skill, index) => (
+                <option key={index} value={JSON.stringify(skill)}>
+                  {skill.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {taskDay.map((task, index) => {
-          if (
-            !scheduledTasks.has(index) ||
-            task.date === new Date(0).toISOString()
-          ) {
-            return (
-              <div
-                key={index}
-                className="task"
-                data-index={index}
-                data-title={task.content}
-                data-id={task._id}
-              >
-                <p>{task.content}</p>
-              </div>
-            );
-          } else {
-            return null;
-          }
-        })}
+          {isLoading ? (
+            <div className="loading">
+              <div></div>
+            </div>
+          ) : (
+            taskDay.map((task, index) => {
+              if (
+                !scheduledTasks.has(index) ||
+                task.date === new Date(0).toISOString()
+              ) {
+                return (
+                  <div
+                    key={index}
+                    className="task"
+                    data-index={index}
+                    data-title={task.content}
+                    data-id={task._id}
+                  >
+                    <p>{task.content}</p>
+                  </div>
+                );
+              } else {
+                return null;
+              }
+            })
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

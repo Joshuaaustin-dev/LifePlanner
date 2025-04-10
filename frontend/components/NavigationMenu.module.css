@@ -1,4 +1,5 @@
 .sidebar {
+  font-family: var(--primary-font);
   width: 20%;
   height: 100vh;
   background-color: #000f26;
@@ -13,9 +14,11 @@
   padding: 20px;
   transition: width 0.3s ease-in-out;
   overflow-x: hidden;
+  /* Causes the fade in animation to look odd, readd if necessary
   box-shadow: 12px 0px 25px rgba(0, 0, 0, 0.35),
     -10px 0px 20px rgba(0, 0, 0, 0.2), 0px 6px 35px rgba(0, 0, 0, 0.25),
     0px 12px 45px rgba(0, 0, 0, 0.12), 0px 3px 8px rgba(0, 0, 0, 0.15);
+  */
 }
 
 /*styling for the logo*/

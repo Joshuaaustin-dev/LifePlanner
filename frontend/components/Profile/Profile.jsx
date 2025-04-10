@@ -24,13 +24,18 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
+      <div className="header">
+        <h1>Profile</h1>
+      </div>
       {user ? (
         <>
           <ProfileHead user={user} setUser={setUser} />
           <ProfileBody skills={user.skills} achievements={user.achievements} />
         </>
       ) : (
-        <p>Loading profile...</p>
+        <div className="loading">
+          <div></div>
+        </div>
       )}
     </div>
   );

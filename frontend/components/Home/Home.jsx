@@ -48,55 +48,58 @@ const Home = () => {
   useEffect(() => {
     if (user && user.skills) {
       setUserText(
-        <div className="home-main">
-          <h1>
-            {getRandomGreeting()} {user.name}!
-          </h1>
-          <hr />
+        <>
+          <div className="headerBlock">
+            <h1>
+              {getRandomGreeting()} {user.name}!
+            </h1>
+          </div>
+          <div className="home-main">
+            {/* Daily Quote Section */}
+            <section className="quoteSection">
+              <h3>Quote of the Day:</h3>
+              <p>{getRandomQuote()}</p>
+            </section>
+            <br />
 
-          {/* Daily Quote Section */}
-          <section className="quoteSection">
-            <h3>Quote of the Day:</h3>
-            <p>{getRandomQuote()}</p>
-          </section>
-          <br />
-
-          {/* Current Skills Section */}
-          <h3>Your Current Skills</h3>
-          <ul className="home-ul">
-            {user.skills.map((skill, skillIndex) => (
-              <li key={skillIndex}>
-                <h4>{skill.name}</h4>
-              </li>
-            ))}
-          </ul>
-          {/* Tutorial Section */}
-          <hr />
-          <section className="home-tutorialSection">
-            <h2>Here’s a quick guide to get you started:</h2>
+            {/* Current Skills Section */}
+            <h3>Your Current Skills</h3>
             <ul className="home-ul">
-              <li>
-                <strong>Dashboard:</strong> View your goals and track your
-                progress with helpful graphs.
-              </li>
-              <li>
-                <strong>Planner:</strong> Use AI to generate a plan for
-                achieving your goals.
-              </li>
-              <li>
-                <strong>Profile:</strong> View your stats and completed goals
-                (Coming Soon).
-              </li>
-              <li>
-                <strong>Calendar:</strong> Schedule your goals to stay on track.
-              </li>
-              <li>
-                <strong>Shop:</strong> More features coming soon to help you
-                achieve even more!
-              </li>
+              {user.skills.map((skill, skillIndex) => (
+                <li key={skillIndex}>
+                  <h4>{skill.name}</h4>
+                </li>
+              ))}
             </ul>
-          </section>
-        </div>
+            {/* Tutorial Section */}
+            <hr />
+            <section className="home-tutorialSection">
+              <h2>Here’s a quick guide to get you started:</h2>
+              <ul className="home-ul">
+                <li>
+                  <strong>Dashboard:</strong> View your goals and track your
+                  progress with helpful graphs.
+                </li>
+                <li>
+                  <strong>Planner:</strong> Use AI to generate a plan for
+                  achieving your goals.
+                </li>
+                <li>
+                  <strong>Profile:</strong> View your stats and completed goals
+                  (Coming Soon).
+                </li>
+                <li>
+                  <strong>Calendar:</strong> Schedule your goals to stay on
+                  track.
+                </li>
+                <li>
+                  <strong>Shop:</strong> More features coming soon to help you
+                  achieve even more!
+                </li>
+              </ul>
+            </section>
+          </div>
+        </>
       );
     } else {
       setUserText(null);

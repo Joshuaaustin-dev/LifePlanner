@@ -1,7 +1,7 @@
 .flex-container {
   display: flex;
   flex-direction: row;
-  height: 100vh;
+  height: 88vh;
   overflow: hidden;
 }
 .drag {
@@ -93,4 +93,19 @@
 .fc-daygrid-dot-event .fc-event-title {
   border-color: white;
   font-weight: 300;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.calendar,
+.drag {
+  animation: fadeIn 0.4s ease-out;
 }

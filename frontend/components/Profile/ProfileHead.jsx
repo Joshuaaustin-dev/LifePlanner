@@ -9,10 +9,13 @@ const ProfileHead = ({ user, setUser }) => {
   const [showEditProfile, setShowEditProfile] = useState(false);
 
   return (
-    <div className="profile-head container-fluid px-5 my-5 rounded-3 shadow-sm p-4 mb-4">
+    <div
+      className="w-75 bg-white container-fluid my-5 rounded-3 shadow-sm p-5 mb-4"
+      style={{ border: "1px solid rgb(185, 185, 185)" }}
+    >
       <div className="row">
         {/* column for Profile Picture */}
-        <div className="col-12 col-md-4 text-center">
+        <div className="my-auto col-12 col-md-4 text-center">
           <div className="profile-picture position-relative mb-3 d-inline-block">
             <img
               src={user.profilePicture || profileImagePlaceholder}

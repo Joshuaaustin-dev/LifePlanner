@@ -64,18 +64,59 @@ const Shop = () => {
     <div>
       <header className={shopStyles.shopContainer}>
         <h1>Shop</h1>
-        {user && <p className={shopStyles.coinDisplay}>Coins: {coins}</p>}
 
+        <p className={shopStyles.coinDisplay}>
+          Coins: {user ? <span>{coins}</span> : "loading.."}
+        </p>
       </header>
       <div className={shopStyles.ticketsContainer}>
         <div className={shopStyles.ticketDiv}>
-          <Ticket value={500} onPurchase={buyCoin} disabled={loading} image={smallpile} />
+          {!loading ? (
+            <Ticket
+              value={500}
+              onPurchase={buyCoin}
+              disabled={loading}
+              image={smallpile}
+            />
+          ) : (
+            isLoading && (
+              <div className="loading">
+                <div></div>
+              </div>
+            )
+          )}
         </div>
         <div className={shopStyles.ticketDiv}>
-          <Ticket value={1000} onPurchase={buyCoin} disabled={loading} image={mediumpile}/>
+          {!loading ? (
+            <Ticket
+              value={500}
+              onPurchase={buyCoin}
+              disabled={loading}
+              image={mediumpile}
+            />
+          ) : (
+            isLoading && (
+              <div className="loading">
+                <div></div>
+              </div>
+            )
+          )}
         </div>
         <div className={shopStyles.ticketDiv}>
-          <Ticket value={1500} onPurchase={buyCoin} disabled={loading} image={largepile}/>
+          {!loading ? (
+            <Ticket
+              value={500}
+              onPurchase={buyCoin}
+              disabled={loading}
+              image={largepile}
+            />
+          ) : (
+            isLoading && (
+              <div className="loading">
+                <div></div>
+              </div>
+            )
+          )}
         </div>
       </div>
     </div>

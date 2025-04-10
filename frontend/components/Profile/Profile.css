@@ -8,3 +8,7 @@
   color: #f4651d;
   scale: 1.5;
 }
+
+.profile-container {
+  font-family: var(--primary-font);
+}

@@ -7,6 +7,7 @@ const Goals = ({ onGoalUpdate }) => {
   const { user } = useUser();
   const [goals, setGoals] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (user && user.skills) {
@@ -26,6 +27,7 @@ const Goals = ({ onGoalUpdate }) => {
       );
 
       setGoals(filteredGoals);
+      setIsLoading(false);
     }
   }, [user, selectedDate]);
 
@@ -54,7 +56,12 @@ const Goals = ({ onGoalUpdate }) => {
       <main>
         <div className={styles.goalsContainer}>
           <h2 className={styles.title}>Goals for Today</h2>
-          {goals.length > 0 ? (
+          {isLoading && (
+            <div className="loading">
+              <div></div>
+            </div>
+          )}
+          {!isLoading && goals.length > 0 ? (
             <ul className={styles.list}>
               {goals.map((goal) => (
                 <li key={goal.id} className={styles.listItem}>
