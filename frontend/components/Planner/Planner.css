@@ -1,14 +1,54 @@
+.container > h1 {
+  font-family: var(--primary-font);
+  margin: 3rem 0 2rem 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.container {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.header {
+  font-family: var(--primary-font);
+  background-color: #2e3a59;
+  color: white;
+  padding: 1.5rem;
+  margin: 0 auto 5rem auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
 /* Center the main planner container */
 .Planner {
   min-width: 100%;
   width: 100%;
-  margin: 2vh auto;
-  padding: 2rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  gap: 1em;
+  align-items: flex-start;
+
   font-family: var(--primary-font);
   font-weight: var(--font-weight-normal);
+}
+
+@media screen and (max-width: 1300px) {
+  .Planner {
+    min-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+    font-family: var(--primary-font);
+    font-weight: var(--font-weight-normal);
+  }
 }
 
 /* Style the heading */
@@ -27,10 +67,10 @@
   font-weight: inherit;
 }
 
-
 .planSection {
+  border: 1px rgb(185, 185, 185) solid;
   width: 50vw;
-  padding: 50px;
+  padding: 20px 0;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -49,7 +89,8 @@
 }
 
 .card {
-  max-width: 800px;
+  border: 1px rgb(185, 185, 185) solid;
+  max-width: 600px;
   padding: 50px;
   background: #ffffff;
   border-radius: 12px;
@@ -120,7 +161,7 @@
 .range-slider::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background: #4caf50;
+  background: var(--color-accent);
   cursor: pointer;
   border-radius: 50%;
 }
@@ -135,7 +176,7 @@
 
 /* Style the button */
 .button {
-  background-color: #4caf50;
+  background-color: var(--color-accent);
   color: white;
   padding: 12px 20px;
   border: none;
@@ -147,7 +188,7 @@
 }
 
 .button:hover {
-  background-color: #45a049;
+  background-color: var(--color-accent);
 }
 
 .button:disabled {
@@ -155,15 +196,95 @@
   cursor: not-allowed;
 }
 
+.skills {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 1rem;
+  gap: 1rem;
+}
+
+.skills > button:hover {
+  background-color: #eeeeee;
+}
+
+.skills > button {
+  background-color: transparent;
+  border-radius: 5px;
+  border: none;
+  padding: 12px 24px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+}
+
+.skills > .highlightSkill {
+  background-color: var(--color-accent);
+  color: var(--color-light);
+}
+.skills > .highlightSkill:hover {
+  background-color: var(--color-accent);
+  color: var(--color-light);
+}
+
+.days > .items {
+  background-color: #ffffff;
+  width: 90%;
+  padding: 20px 5px 20px 5px;
+  border-left: 5px solid #f4651d;
+  margin: 0.5rem 0 0 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.items .icon {
+  visibility: hidden;
+  float: right;
+  cursor: pointer;
+  user-select: none;
+}
+
+.items:hover .icon {
+  visibility: visible;
+}
+
+.items textarea {
+  height: 80px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.items p {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.items .button {
+  background-color: var(--color-accent);
+  color: white;
+  padding: 6px 20px;
+  margin: 5px 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.days h5,
+.days p {
+  text-align: left;
+  margin: 5px 0 0 1rem;
+}
+
 /* Style the section that contains the plan */
 .Planner section {
   width: 100%;
-}
-
-/* Style the loading message */
-.Planner section p {
-  text-align: center;
-  color: #666;
 }
 
 /* Style the plan container */
@@ -195,4 +316,30 @@
 /* Style each day in the plan */
 .mb-4 {
   margin-bottom: 1rem;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.loading > div {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid var(--color-accent);
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  animation: spin 1s linear infinite;
+  text-align: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -1,4 +1,3 @@
-
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -14,6 +13,7 @@ import dummyRoutes from "./routes/dummyRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import coinRoutes from "./routes/coinRoutes.js";
+import skillsRoutes from "./routes/skillsRoutes.js";
 
 config();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -39,7 +39,7 @@ app.use("/", dummyRoutes);
 app.use("/", userRoutes);
 app.use("/", paymentRoutes);
 app.use("/", coinRoutes);
-
+app.use("/skills-api", skillsRoutes);
 
 // MongoDB connection string - Update this based on your cluster
 const mongoURI = process.env.DB_URI;
@@ -113,8 +113,6 @@ app.patch("/update-goal/:id", async (req, res) => {
     res.status(500).send("Error updating goal");
   }
 });
-
-
 
 // Connect to MongoDB
 mongoose

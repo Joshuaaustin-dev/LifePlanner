@@ -11,6 +11,11 @@ const Planner = () => {
   const [timePeriod, setTimePeriod] = useState("2");
   const [goalSpeed, setGoalSpeed] = useState("1");
   const { user, coins, setCoins } = useUser();
+  const [userSkills, setUserSkills] = useState([]);
+  const [selectedSkill, setSelectedSkills] = useState();
+  const [selectedDay, setSelectedDay] = useState();
+  const [editID, setEditID] = useState(null);
+  const [editValue, setEditValue] = useState("");
 
   const speedOptions = ["Slow", "Moderate", "Fast"];
 
@@ -52,17 +57,16 @@ const Planner = () => {
         axios
           .post("http://localhost:5000/add-skill", {
             email: user.email,
-            skill: res.data, 
+            skill: res.data,
           })
           .then((response) => {
             const skill = response.data;
-
             axios
               .post("http://localhost:5000/deduct-coins", {
                 email: user.email,
               })
               .then((coinResponse) => {
-                setCoins(coinResponse.data.coins); 
+                setCoins(coinResponse.data.coins);
               })
               .catch((error) => console.error("Error updating coins:", error));
 
@@ -84,73 +88,229 @@ const Planner = () => {
     setPrompt("");
   };
 
+  useEffect(() => {
+    setIsLoading(true);
+    axios
+      .post("http://localhost:5000/calendar-api/get-skills", user, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.data.skills === undefined) {
+          return {};
+        }
+        setIsLoading(false);
+        if (response.data.skills.length === 0) {
+          return;
+        }
+        const skill = response.data.skills;
+        setUserSkills(skill);
+        setSelectedSkills(skill[skill.length - 1]);
+        setSelectedDay(skill[skill.length - 1].day);
+      })
+      .catch((error) => {
+        console.error("Error fetching user:", error);
+      });
+  }, [user, plan]);
+
+  const handleSelect = (e, selected) => {
+    e.preventDefault();
+    setSelectedSkills(userSkills[selected]);
+    setSelectedDay(userSkills[selected].day);
+    setEditID();
+  };
+
+  const handleSaveEdit = (e, selected) => {
+    e.preventDefault();
+    const id = selectedDay[selected]._id;
+    axios
+      .post(
+        "http://localhost:5000/skills-api/update-content",
+        { user: user, dayID: id, content: editValue },
+        {
+          withCredentials: true,
+        }
+      )
+      .catch((error) => {
+        console.error("Could not delete:", error);
+      });
+    setEditID();
+    let updatedDays = selectedDay;
+    updatedDays[selected].content = editValue;
+    setSelectedDay(updatedDays);
+  };
+
+  const editSkill = (e, selected) => {
+    e.preventDefault();
+    setEditID(selected);
+    setEditValue(selectedDay[selected].content);
+  };
+
+  const deleteSkill = (e, selected) => {
+    e.preventDefault();
+    const id = selectedDay[selected]._id;
+    setSelectedDay((prevDays) => prevDays.filter((day) => day._id !== id));
+
+    axios
+      .post(
+        "http://localhost:5000/skills-api/delete-day",
+        { user: user, dayID: id },
+        {
+          withCredentials: true,
+        }
+      )
+      .catch((error) => {
+        console.error("Could not delete:", error);
+      });
+  };
+
   return (
-    <div className="Planner responsive">
-      <div className="card">
-        <h1>Generate a new plan!</h1>
-        <h3>Current amount of coins: {coins}</h3>
-
-        <textarea
-          className="textbox"
-          rows="4"
-          value={prompt}
-          placeholder="Enter a prompt..."
-          onChange={(e) => setPrompt(e.target.value)}
-        />
-        <p className="ms-1">
-          Tip: Being more <b>specific</b> will create a more detailed plan. (e.g., Chess vs Chess Openings)
-        </p>
-
-        <div className="slider-container">
-          <label htmlFor="days-range" className="slider-label">
-            Plan Duration: {timePeriod} {timePeriod === 1 ? "day" : "days"}
-          </label>
-          <input
-            type="range"
-            id="days-range"
-            className="range-slider"
-            min="1"
-            max="30"
-            value={timePeriod}
-            onChange={(e) => setTimePeriod(parseInt(e.target.value))}
-          />
-        </div>
-
-        <button
-          className="button"
-          onClick={handleSubmit}
-          disabled={isLoading || prompt.trim() === ""}
-        >
-          Send to AI
-        </button>
-
-        {isError && (
-          <p className="text-center text-danger">
-            Not enough coins to generate a plan!
-          </p>
-        )}
+    <>
+      <div className="header">
+        <h1>Planning Hub</h1>
       </div>
+      <div className="container">
+        <div className="Planner responsive">
+          <div className="card">
+            <h1>Generate a new plan!</h1>
+            {isLoading && (
+              <div className="loading">
+                <div></div>
+              </div>
+            )}
+            {!isLoading && <h3>Current amount of coins: {coins}</h3>}
 
-      {isLoading && <p>Loading ...</p>}
+            <textarea
+              className="textbox"
+              rows="4"
+              value={prompt}
+              placeholder="Enter a prompt..."
+              onChange={(e) => setPrompt(e.target.value)}
+            />
+            <p className="ms-1">
+              Tip: Being more <b>specific</b> will create a more detailed plan.
+              (e.g., Chess vs Chess Openings)
+            </p>
 
-      {plan.length > 0 && !isLoading && (
-        <section className="planSection">
-          <div className="p-2 bg-white-100 mt-1">
-            <h2 className="font-semibold text-center mb-4">Learning Plan</h2>
-            <hr className="border-bottom border-2 " />
-            <div>
-              {plan.map((day, index) => (
-                <div key={index} className="mb-4">
-                  <h3>
-                    {new Date(day.date).toLocaleDateString()}: {day.content}
-                  </h3>
-                </div>
-              ))}
+            <div className="slider-container">
+              <label htmlFor="days-range" className="slider-label">
+                Plan Duration: {timePeriod} {timePeriod === 1 ? "day" : "days"}
+              </label>
+              <input
+                type="range"
+                id="days-range"
+                className="range-slider"
+                min="1"
+                max="30"
+                value={timePeriod}
+                onChange={(e) => setTimePeriod(parseInt(e.target.value))}
+              />
             </div>
+
+            <button
+              className="button"
+              onClick={handleSubmit}
+              disabled={isLoading || prompt.trim() === ""}
+            >
+              Send to AI
+            </button>
+
+            {isError && (
+              <p className="text-center text-danger">
+                Not enough coins to generate a plan!
+              </p>
+            )}
           </div>
-        </section>
-      )}
-    </div>
+
+          <section className="planSection">
+            <div className="bg-white-100 mt-1">
+              <h2 className="text-center mb-4">Learning Plan</h2>
+              <hr className="border-bottom border-1 " />
+              {isLoading && (
+                <div className="loading">
+                  <div></div>
+                </div>
+              )}
+              <div className="skills">
+                {!isLoading &&
+                  userSkills.map((skill, i) => (
+                    <button
+                      key={i}
+                      onClick={(e) => handleSelect(e, i)}
+                      className={
+                        selectedSkill.name === skill.name
+                          ? "highlightSkill"
+                          : ""
+                      }
+                    >
+                      {skill.name}
+                    </button>
+                  ))}
+              </div>
+              {!isLoading && <hr className="border-bottom border-1 pb-1" />}
+              <div className="days">
+                {selectedDay &&
+                  !isLoading &&
+                  selectedDay.map((days, i) => {
+                    const formattedDate = new Date(days.date);
+                    const date = formattedDate.toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    });
+
+                    return (
+                      <div className="items" key={i}>
+                        <h5>
+                          {date}
+                          <span
+                            onClick={(e) => deleteSkill(e, i)}
+                            className="material-icons icon"
+                          >
+                            delete
+                          </span>{" "}
+                          <span
+                            onClick={(e) => editSkill(e, i)}
+                            className="material-icons icon"
+                          >
+                            edit
+                          </span>{" "}
+                        </h5>
+                        {editID === i ? (
+                          <textarea
+                            maxlength="250"
+                            type="text"
+                            value={editValue}
+                            onChange={(e) => setEditValue(e.target.value)}
+                          ></textarea>
+                        ) : (
+                          <p>{days.content}</p>
+                        )}
+
+                        {editID === i && (
+                          <>
+                            <button
+                              onClick={(e) => handleSaveEdit(e, i)}
+                              className="button"
+                            >
+                              Save
+                            </button>
+                            <button
+                              onClick={() => setEditID()}
+                              className="button"
+                            >
+                              Cancel
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </>
   );
 };
 
