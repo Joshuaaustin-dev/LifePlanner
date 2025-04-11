@@ -172,25 +172,42 @@ export const sendResetCode = async (req, res) => {
     //store the code in the variable associated with the user's email
     verificationCodes[email] = confirmationCode;
 
-    // Set up Mailtrap transporter
-    const transport = nodemailer.createTransport({
-      host: "sandbox.smtp.mailtrap.io",
-      port: 2525,
-      auth: {
-        user: process.env.EMAIL_USER, 
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+    // Use gmail to send reset code 
+    // Use mailtrap if gmail doesn't work
+    let transporterConfig = {};
+
+    if (email.toLowerCase().endsWith("@gmail.com")) {
+      // Use Gmail SMTP for Gmail addresses
+      transporterConfig = {
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_USER, // your Gmail address
+          pass: process.env.GMAIL_PASS // your Gmail app password
+        },
+      };
+    } else {
+      // Use Mailtrap for all other domains
+      transporterConfig = {
+        host: 'sandbox.smtp.mailtrap.io',
+        port: 2525,
+        auth: {
+          user: process.env.MAILTRAP_USER,
+          pass: process.env.MAILTRAP_PASS,
+        },
+      };
+    }
+
+    const transporter = nodemailer.createTransport(transporterConfig);
     
     const mailOptions = {
-      from: '"Mailtrap Test" <hello@example.com>',
+      from: '"LifePlanner" <' + process.env.MAIL_USER + '>',
       to: email,
       subject: "Password Reset Confirmation Code",
       text: `Your confirmation code is: ${confirmationCode}`,
     };
 
     // Send the email with the confirmation code
-    await transport.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
     res.status(200).json({ message: "Reset code sent to your email." });
 
   } catch (err) {
