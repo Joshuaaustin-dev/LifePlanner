@@ -154,48 +154,95 @@ export const logout = async (req, res) => {
   res.status(200).send("Logged out");
 };
 
-//Reset Password method
-export const resetPassword = async (req, res) => {
-  const { email, newPassword } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res
-        .status(404)
-        .json({ message: "User not found. Please try again." });
-    }
+// Variable to store confirmation codes
+let verificationCodes = {};
 
-    // Looking to send emails in production? Check out our Email API/SMTP product!
-    var transport = nodemailer.createTransport({
+//Send reset confirmation code method
+export const sendResetCode = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found." });
+
+    //generate 6 digit confirmation code
+    const confirmationCode = Math.floor(100000 + Math.random() * 900000).toString();
+ 
+    //store the code in the variable associated with the user's email
+    verificationCodes[email] = confirmationCode;
+
+    // Set up Mailtrap transporter
+    const transport = nodemailer.createTransport({
       host: "sandbox.smtp.mailtrap.io",
       port: 2525,
       auth: {
-        user: process.env.EMAIL_USER, //or (mine) 95ca2d554f7f0a //or (original) 163d6b4b3ccd93
+        user: process.env.EMAIL_USER, 
         pass: process.env.EMAIL_PASS,
       },
     });
-
+    
     const mailOptions = {
       from: '"Mailtrap Test" <hello@example.com>',
       to: email,
-      subject: "Password Reset",
-      text: "Password reset test",
+      subject: "Password Reset Confirmation Code",
+      text: `Your confirmation code is: ${confirmationCode}`,
     };
 
-    transport.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error);
-      }
-    });
+    // Send the email with the confirmation code
+    await transport.sendMail(mailOptions);
+    res.status(200).json({ message: "Reset code sent to your email." });
+
+  } catch (err) {
+    console.error("Error sending reset code:", err);
+    res.status(500).json({ message: "Error sending reset code." });
+  }
+}
+
+//Verification Endpoint
+export const verifyResetCode = (req, res) => {
+  const { email, code } = req.body;
+  
+  if (verificationCodes[email] && verificationCodes[email] === code) {
+    res.status(200).json({ message: "Code verified." });
+  } else {
+    res.status(400).json({ message: "Invalid or expired code." });
+  }
+};
+
+
+//Reset Password method
+export const resetPassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  // Check if a code exists for this email
+  if (!verificationCodes[email]) {
+    return res.status(400).json({ message: "Please verify your email first." });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+    
+    // Check if a code exists for this email (meaning they should have verified it first)
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
 
     // Update password hash before saving
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
-
     user.password = hashedPassword;
+
+    //save the password
     await user.save();
+
+    //delete the confirmation code
+    delete verificationCodes[email];
+
+    //display that the password updated successfully
     res.status(200).json({ message: "Password updated successfully." });
   } catch (err) {
+    //handle errors
     console.error("Error resetting password:", err);
     res.status(500).json({ message: "Error resetting password." });
   }
