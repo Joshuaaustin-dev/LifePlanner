@@ -44,10 +44,6 @@ const HorizontalBarChart = ({ updateTrigger }) => {
               (d) => d.completed === true
             ).length;
 
-            console.log(
-              `Skill: ${skill.name}, Completed: ${completed}, Total: ${total}`
-            );
-
             return {
               name: skill.name,
               completed,

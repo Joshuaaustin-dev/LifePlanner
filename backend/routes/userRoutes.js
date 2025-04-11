@@ -5,6 +5,8 @@ import {
   getUser,
   login,
   register,
+  sendResetCode,
+  verifyResetCode,
   resetPassword,
   updateProfile
 } from "../controllers/userController.js";
@@ -16,6 +18,8 @@ router.post("/check-auth", checkAuth);
 router.post("/logout", logout);
 router.post("/login", login);
 router.post("/register", register);
+router.post("/send-reset-code", sendResetCode);
+router.post("/verify-reset-code", verifyResetCode);
 router.post("/reset-password", resetPassword);
 router.post("/update-profile", updateProfile);
 
