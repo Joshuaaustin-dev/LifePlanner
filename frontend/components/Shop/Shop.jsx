@@ -89,7 +89,7 @@ const Shop = () => {
         <div className={shopStyles.ticketDiv}>
           {!loading ? (
             <Ticket
-              value={500}
+              value={1000}
               onPurchase={buyCoin}
               disabled={loading}
               image={mediumpile}
@@ -105,7 +105,7 @@ const Shop = () => {
         <div className={shopStyles.ticketDiv}>
           {!loading ? (
             <Ticket
-              value={500}
+              value={1500}
               onPurchase={buyCoin}
               disabled={loading}
               image={largepile}
