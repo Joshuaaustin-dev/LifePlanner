@@ -31,7 +31,6 @@ const Calendar = () => {
         if (response.data.skills === undefined) {
           return {};
         }
-        setIsLoading(false);
         if (response.data.skills.length === 0) {
           return;
         }
@@ -53,6 +52,9 @@ const Calendar = () => {
 
         // First skill in dropdown and all the days (Date, content)
         setTaskDay(skill[skill.length - 1].day);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 150);
       })
       .catch((error) => {
         console.error("Error fetching user:", error);
@@ -181,7 +183,7 @@ const Calendar = () => {
         <div className="drag" ref={draggableRef}>
           <div className="task-header">
             <select
-              value={isLoading ? "loading" : JSON.stringify(selectedSkill)}
+              value={JSON.stringify(selectedSkill)}
               onChange={handleSelectChange}
             >
               {userSkills.map((skill, index) => (

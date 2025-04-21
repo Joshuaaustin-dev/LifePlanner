@@ -41,9 +41,6 @@ const Shop = () => {
 
   const buyCoin = async (value) => {
     if (!user?.email) return;
-
-    setLoading(true);
-
     try {
       const response = await fetch("http://localhost:5000/create-session", {
         method: "POST",
@@ -79,7 +76,7 @@ const Shop = () => {
               image={smallpile}
             />
           ) : (
-            isLoading && (
+            loading && (
               <div className="loading">
                 <div></div>
               </div>
@@ -95,7 +92,7 @@ const Shop = () => {
               image={mediumpile}
             />
           ) : (
-            isLoading && (
+            loading && (
               <div className="loading">
                 <div></div>
               </div>
@@ -111,7 +108,7 @@ const Shop = () => {
               image={largepile}
             />
           ) : (
-            isLoading && (
+            loading && (
               <div className="loading">
                 <div></div>
               </div>
